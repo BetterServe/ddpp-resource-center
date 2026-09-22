@@ -163,6 +163,14 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .btn.secondary { background: transparent; color: var(--green); border-color: var(--green); }
 .mod-dd .btn.secondary:hover { background: var(--green); color: var(--cream); }
 
+/* ---------- Screenshots ---------- */
+.mod-dd .shot { margin: 20px 0 0; }
+.mod-dd .shot img {
+  border: 1px solid var(--med-gray); border-radius: 10px; background: var(--white);
+  max-width: min(100%, 420px);
+}
+.mod-dd .shot figcaption { font-size: 13px; color: var(--dark-gray); margin-top: 8px; max-width: 60ch; }
+
 /* ---------- Retailer grid ----------
    Each tile is sized to take a logo image later. To swap one in, replace the
    brand name with <img src="…" alt="Walmart">; the tile needs no other change. */
@@ -347,6 +355,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <div class="subsection">
         <h3>What to tell the family about what happens next</h3>
         <p>They will get a text with a verification link right away, and they need to click it. Within one business day of clicking, their eCard arrives by text. Their 6 month benefit starts when the card is issued. Everything after that, including retailer instructions and the support contact, is texted to them.</p>
+        <p>One thing worth saying explicitly: <strong>the balance has to be used within 31 days.</strong> It does not carry over. A family who waits to save up will lose what they did not spend.</p>
       </div>
 
       <div class="subsection">
@@ -369,7 +378,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>The benefit</h3>
-        <p>$40 per month per child, loaded onto a digital eCard. Up to 3 children per household, so $120 per month at most. It lasts 6 months from the date the eCard is issued, with no renewal. This is a limited pilot for State Fiscal Year 2027 and services beyond this year are not guaranteed.</p>
+        <p>$40 per child, loaded onto a digital eCard every 31 days. Up to 3 children per household, so $120 per cycle at most. It lasts 6 cycles from the date the eCard is issued, with no renewal. <strong>Each balance expires after 31 days and does not roll over.</strong> This is a limited pilot for State Fiscal Year 2027 and services beyond this year are not guaranteed.</p>
       </div>
 
       <div class="subsection">
@@ -423,16 +432,32 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <div class="subsection">
         <h3>What they see when they open it</h3>
         <p>A digital card with a payment card number and the client's name on it. This is a real payment method issued to that client, not a coupon or a voucher code. The card number matters for online shopping: it goes in the debit or credit card field at checkout, the same as any other card.</p>
+        <figure class="shot">
+          <img src="img/card-home.png" width="432" height="793" loading="lazy" alt="The card page: Diaper Dollars card at the top, a store list button, Check a Product and Pay with Barcode tiles, and the active offer below">
+          <figcaption>The whole card page. Card numbers in these screenshots are partly masked for this guide; a family sees the full number.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Available in 14 languages</h3>
         <p>A language selector sits in the top right corner of the card page. Choosing a language translates the entire card experience, not just the menu. Spanish, Arabic, and Cantonese are among the options. Families do not need to ask anyone to set this up.</p>
+        <figure class="shot">
+          <img src="img/language-selector.png" width="283" height="356" loading="lazy" alt="Language dropdown open, showing English, Espanol, Arabic and Cantonese with a search box">
+          <figcaption>The selector is searchable, so a family can type their language rather than scroll.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Active offers, balance, and the 31 day cycle</h3>
-        <p>Below the card, families see their active offers: the support they are receiving, the current balance, and a <strong>Valid thru</strong> date. Benefits are issued in 31 day cycles, so a new offer with a new expiration date appears each cycle. Over a six month enrollment a family receives six of these.</p>
+        <p>Below the card, families see their active offer: the amount they receive, the current balance, and a <strong>Valid thru</strong> date. The amount depends on how many children under 3 are in the household &mdash; $40 for one, $80 for two, $120 for three. It arrives as a single balance, not as a separate offer per child.</p>
+        <div class="callout warn">
+          <p><strong>The balance does not roll over.</strong> Families have 31 days to spend it. Whatever is left on the expiration date is removed and a fresh balance is issued for the next cycle. Unspent money does not accumulate and is not returned. Over a six month enrollment there are six of these cycles.</p>
+        </div>
+        <p>Say this out loud at enrollment. A family saving up several months for a bulk purchase will lose the earlier balances, and they will not find that out until the money is already gone.</p>
+        <figure class="shot">
+          <img src="img/active-offers.png" width="568" height="306" loading="lazy" alt="Active Offers panel showing the offer name, a balance of forty dollars, and a valid thru date">
+          <figcaption>Balance and Valid thru date. This is where a family checks what is left and how long they have.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
@@ -444,26 +469,47 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
           <li>At the register, scan all items and press Total or Pay. At a staffed lane, select Credit/Debit.</li>
           <li>Scan the Diaper Dollars barcode with the hand scanner, before any other form of payment.</li>
         </ol>
+        <figure class="shot">
+          <img src="img/store-list.png" width="383" height="514" loading="lazy" alt="Searchable store list showing Walmart, Walmart.com, Acme Markets, Albertsons, Andronicos Markets and Bakers">
+          <figcaption>The store list is searchable by name, and online storefronts are separate entries.</figcaption>
+        </figure>
+        <figure class="shot">
+          <img src="img/pay-barcode.png" width="556" height="883" loading="lazy" alt="Pay with Barcode screen for Walmart with self check-out and cashier instructions above a barcode">
+          <figcaption>Instructions differ by retailer and by lane type. The barcode is masked here.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Paying online</h3>
         <p>Families enter the card number from the top of their card into the debit or credit card field at checkout. Online storefronts appear in the store list as their own entries, so a family shopping at Walmart online selects the Walmart.com listing rather than the in-store one.</p>
+        <figure class="shot">
+          <img src="img/card-front.png" width="385" height="236" loading="lazy" alt="Close-up of the Diaper Dollars card showing where the card number sits, with the cardholder name below">
+          <figcaption>The number runs across the middle of the card. That is what goes in the card field online.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Printing a card to carry</h3>
         <p>Families who would rather not use a phone at the register can print one. They pick the retailer they intend to shop at, then use the print button at the bottom right. The result is a print ready card carrying that retailer's checkout instructions and a scannable barcode. It is retailer specific, so a family shopping at two stores prints two.</p>
+        <figure class="shot">
+          <img src="img/print-card.png" width="523" height="793" loading="lazy" alt="Print ready card headed Redeem Offers at Walmart, with the card, offer details, checkout instructions and a barcode">
+          <figcaption>The printed version carries the offer details and that retailer's instructions on one page.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Checking whether a product is covered</h3>
         <p>The card page has a <strong>Check a Product</strong> feature. It opens the phone camera so a family can scan a barcode on the shelf and see immediately whether that item is covered, before they get to the register.</p>
+        <figure class="shot">
+          <img src="img/check-product.png" width="272" height="225" loading="lazy" alt="Check a Product tile reading: scan the barcode with your phone camera to make sure the offer applies">
+          <figcaption>Worth pointing out at enrollment. It prevents a declined item at the register.</figcaption>
+        </figure>
       </div>
 
       <div class="subsection">
         <h3>Program guidelines and help</h3>
         <p>Buttons at the bottom of the card page open the full program guide and a help section with phone, email, and chat support, plus a program FAQ. Families do not need to come back to your site for any of this.</p>
+        <p>The number families will see on the card, <strong>888-253-5667</strong>, is technical support: card access and problems at the register. It is not the MOD Collective line. Program and enrollment questions go to <strong>844-663-2655</strong>.</p>
       </div>
     </div>
 
@@ -508,13 +554,13 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="contacts">
         <div class="who">
-          <h3>For families</h3>
-          <p>If a family calls your clinic with an eCard question, give them this:</p>
-          <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
+          <h3>For families: the card</h3>
+          <p>Trouble opening the card, or a payment that will not go through at the register. This is the number printed on the card itself, so families may already have it:</p>
+          <p class="detail"><a href="tel:+18882535667">888-253-5667</a></p>
         </div>
         <div class="who">
-          <h3>For site staff</h3>
-          <p>Questions about the program, enrollment, or a lost enrollment link. Ask for the DDPP program team:</p>
+          <h3>For site staff: the program</h3>
+          <p>Enrollment questions, a lost enrollment link, or anything about how the pilot runs. This reaches MOD Collective directly:</p>
           <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
         </div>
       </div>
@@ -539,6 +585,14 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <h3 class="sectitle">Frequently asked questions</h3>
 
+      <details class="faq">
+        <summary>What happens to money a family does not spend?</summary>
+        <p>It is removed at the end of the 31 day cycle and a fresh balance is issued. Unspent funds do not carry over and are not returned. Tell families this at enrollment, because a family saving up for a bulk purchase will lose the earlier balances without warning.</p>
+      </details>
+      <details class="faq">
+        <summary>A family's payment was declined at the register. What went wrong?</summary>
+        <p>Almost always the barcode was scanned after another payment type. It has to be scanned first, with the hand scanner, before cash or any card. If the order was rung up correctly and it still failed, they should call technical support at 888-253-5667.</p>
+      </details>
       <details class="faq">
         <summary>Why is our enrollment link not on this page?</summary>
         <p>Enrollment forms are site specific and access to them is controlled for quality assurance. If links were published here, a family could be enrolled through the wrong site's form, which credits them to that site and distorts the state's comparison of WIC clinics against home visiting programs. If you have lost your link, ask your site coordinator, or call 844-663-2655 and we will reissue it.</p>

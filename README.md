@@ -80,6 +80,25 @@ through git and appear inside the existing iframe automatically.
 | Four training video links | Support section, `.video` blocks | The tiles render but nothing is clickable yet. |
 | Retailer logos | Program section, `.retailers` grid | Each tile is sized for a logo. Replace the brand name with `<img src="…" alt="Walmart">`; no other change needed. |
 | Monthly call dates | Support section | Three `[date TBD]` entries. |
+| Fresh card screenshots | `img/` | Current ones show the old offer label "$40 IL WIC Diaper Support". Retake after the label changes to "Diaper Support". |
+
+### About the screenshots in `img/`
+
+They come from a demo card that has a live offer attached, so the card
+number and the barcodes are masked before publishing. Only the first four
+digits are visible. If you replace these images, redact the same things: the
+barcode encodes the full card number, so masking the printed digits alone
+accomplishes nothing.
+
+### The two support numbers
+
+| Number | Handles | Who calls it |
+|---|---|---|
+| 888-253-5667 | Card access, declined payments at the register | Families. It is printed on the card. |
+| 844-663-2655 | The program, enrollment, lost enrollment links | Site staff, and families with program questions. |
+
+Getting these backwards sends a family with a checkout problem to a line
+that cannot help them mid-transaction.
 
 Enrollment links are deliberately **not** listed anywhere on the page. They are
 site specific, and a family enrolled through the wrong site's form is credited
