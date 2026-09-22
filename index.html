@@ -261,6 +261,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <button type="button" onclick="ddGo('home')" class="active" id="nav-home" aria-current="page">Home</button>
         <button type="button" onclick="ddGo('enroll')" id="nav-enroll">Enroll a Family</button>
         <button type="button" onclick="ddGo('program')" id="nav-program">How It Works</button>
+        <button type="button" onclick="ddGo('card')" id="nav-card">The Card</button>
         <button type="button" onclick="ddGo('about')" id="nav-about">About the DDPP</button>
         <button type="button" onclick="ddGo('support')" id="nav-support">Training &amp; Support</button>
       </nav>
@@ -287,6 +288,11 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
           <h3>How It Works</h3>
           <p>The benefit, where the card works, eligibility, timeline, and what you are not responsible for.</p>
           <span class="go">Look it up</span>
+        </button>
+        <button type="button" class="card" onclick="ddGo('card')">
+          <h3>The Card</h3>
+          <p>What families see when they open their link, how they pay, and the one step that trips people up.</p>
+          <span class="go">Walk through it</span>
         </button>
         <button type="button" class="card" onclick="ddGo('about')">
           <h3>About the DDPP</h3>
@@ -395,6 +401,69 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <div class="subsection">
         <h3>What you are not responsible for</h3>
         <p>No physical diapers. No warehouse, no pallets, no volunteers. No income verification beyond what you already do for WIC. No managing the eCard or fielding benefit questions. Once a family is enrolled, the Diaper Dollars support team handles everything. Families get the support number and email with their card.</p>
+      </div>
+    </div>
+
+    <!-- ========== THE CARD ========== -->
+    <div class="page" id="card">
+      <button type="button" class="back" onclick="ddGo('home')">&larr; Resource Center home</button>
+      <h2>How the Diaper Dollars card works.</h2>
+      <p class="lede">You will not manage the card, but families will ask you about it. This is what they see and how it behaves.</p>
+
+      <div class="callout warn">
+        <h3>The one thing families get wrong</h3>
+        <p>At checkout, the Diaper Dollars barcode has to be scanned <strong>before any other payment type</strong>. If a family swipes a debit card or inserts cash first, the diaper benefit will not apply to the order. This is the most common reason a payment fails.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>How families get the card</h3>
+        <p>Each family receives a unique link by text. There is no app to download. The link opens in any browser on a phone, tablet, or computer, and it is the same link for the full six months &mdash; it is not reissued each month. Tell families to save it.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What they see when they open it</h3>
+        <p>A digital card with a payment card number and the client's name on it. This is a real payment method issued to that client, not a coupon or a voucher code. The card number matters for online shopping: it goes in the debit or credit card field at checkout, the same as any other card.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Available in 14 languages</h3>
+        <p>A language selector sits in the top right corner of the card page. Choosing a language translates the entire card experience, not just the menu. Spanish, Arabic, and Cantonese are among the options. Families do not need to ask anyone to set this up.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Active offers, balance, and the 31 day cycle</h3>
+        <p>Below the card, families see their active offers: the support they are receiving, the current balance, and a <strong>Valid thru</strong> date. Benefits are issued in 31 day cycles, so a new offer with a new expiration date appears each cycle. Over a six month enrollment a family receives six of these.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Paying in a store</h3>
+        <ol class="steps">
+          <li>Open the card link and select <strong>Click here for a list of stores</strong>.</li>
+          <li>Choose the retailer they are shopping at. The list is searchable and covers major grocery and pharmacy chains.</li>
+          <li>Select <strong>Pay with Barcode</strong>. Instructions specific to that retailer appear, for both self checkout and a staffed lane.</li>
+          <li>At the register, scan all items and press Total or Pay. At a staffed lane, select Credit/Debit.</li>
+          <li>Scan the Diaper Dollars barcode with the hand scanner, before any other form of payment.</li>
+        </ol>
+      </div>
+
+      <div class="subsection">
+        <h3>Paying online</h3>
+        <p>Families enter the card number from the top of their card into the debit or credit card field at checkout. Online storefronts appear in the store list as their own entries, so a family shopping at Walmart online selects the Walmart.com listing rather than the in-store one.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Printing a card to carry</h3>
+        <p>Families who would rather not use a phone at the register can print one. They pick the retailer they intend to shop at, then use the print button at the bottom right. The result is a print ready card carrying that retailer's checkout instructions and a scannable barcode. It is retailer specific, so a family shopping at two stores prints two.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Checking whether a product is covered</h3>
+        <p>The card page has a <strong>Check a Product</strong> feature. It opens the phone camera so a family can scan a barcode on the shelf and see immediately whether that item is covered, before they get to the register.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Program guidelines and help</h3>
+        <p>Buttons at the bottom of the card page open the full program guide and a help section with phone, email, and chat support, plus a program FAQ. Families do not need to come back to your site for any of this.</p>
       </div>
     </div>
 
@@ -539,7 +608,7 @@ var DD_GOAL     = 5500;           // program target
 var DD_LABEL    = 'applications submitted';  // see note in the README about wording
 
 /* ---------- Section switching ---------- */
-var DD_SECTIONS = ['home', 'enroll', 'program', 'about', 'support'];
+var DD_SECTIONS = ['home', 'enroll', 'program', 'card', 'about', 'support'];
 
 function ddGo(id, opts) {
   if (DD_SECTIONS.indexOf(id) === -1) id = 'home';
