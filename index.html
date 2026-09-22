@@ -101,7 +101,9 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .card .go { display: block; margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--med-green); }
 
 /* ---------- Home: enrollment counter ---------- */
-.mod-dd .tally { background: var(--green); border-radius: 14px; padding: 30px 30px 26px; color: var(--cream); margin-bottom: 20px; }
+.mod-dd .tallies { display: grid; grid-template-columns: repeat(auto-fit, minmax(272px, 1fr)); gap: 16px; margin-bottom: 20px; }
+.mod-dd .tally { background: var(--green); border-radius: 14px; padding: 30px 30px 26px; color: var(--cream); }
+.mod-dd .tally.closed .num { color: var(--med-gray); }
 .mod-dd .tally .num {
   font-family: var(--serif); font-style: italic; font-weight: 600;
   font-size: clamp(42px, 7vw, 64px); line-height: 1; color: var(--teal); display: block;
@@ -162,6 +164,58 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .btn:hover { background: #A82B28; border-color: #A82B28; }
 .mod-dd .btn.secondary { background: transparent; color: var(--green); border-color: var(--green); }
 .mod-dd .btn.secondary:hover { background: var(--green); color: var(--cream); }
+
+/* ---------- Stat figures ---------- */
+.mod-dd .stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(196px, 1fr));
+  gap: 16px; margin: 22px 0 16px;
+}
+.mod-dd .stats > div {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-left: 5px solid var(--coral); border-radius: 12px; padding: 22px 24px;
+}
+.mod-dd .stats .fig {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(30px, 5vw, 40px); line-height: 1; color: var(--med-green); display: block;
+}
+.mod-dd .stats p { margin: 10px 0 0; font-size: 15px; color: #3C5555; max-width: none; }
+
+/* ---------- Benefits that exclude diapers ---------- */
+.mod-dd .excl {
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 10px; margin: 20px 0 18px;
+}
+.mod-dd .excl li {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-radius: 8px; padding: 15px 18px; margin: 0;
+}
+.mod-dd .excl strong { display: block; font-size: 17px; color: var(--green); }
+.mod-dd .excl span { font-size: 13px; font-weight: 600; color: var(--red); }
+
+/* ---------- Question cards ---------- */
+.mod-dd .qcards {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(266px, 1fr));
+  gap: 16px; margin: 20px 0 14px;
+}
+.mod-dd .qcards > div {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-top: 5px solid var(--teal); border-radius: 12px; padding: 22px 24px;
+}
+.mod-dd .qcards h4 {
+  margin: 0 0 9px; font-size: 12px; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--med-green);
+}
+.mod-dd .qcards .q { display: block; font-size: 17px; font-weight: 700; color: var(--green); margin-bottom: 9px; line-height: 1.35; }
+.mod-dd .qcards p { margin: 0; font-size: 15px; max-width: none; }
+.mod-dd .qcards .why { margin-top: 11px; font-size: 14px; color: var(--dark-gray); }
+
+/* ---------- Inline chip ---------- */
+.mod-dd .chip {
+  display: inline-block; vertical-align: middle; margin-left: 10px;
+  background: var(--teal); color: var(--green); font-size: 12px; font-weight: 700;
+  padding: 4px 11px; border-radius: 999px; letter-spacing: .03em; text-transform: uppercase;
+}
 
 /* ---------- Data tables ---------- */
 .mod-dd .tscroll {
@@ -380,12 +434,40 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         </button>
       </div>
 
-      <div class="tally">
-        <span class="num" id="dd-count">0</span>
-        <p class="of"><span id="dd-label">applications submitted</span> of 5,500 across all 12 sites</p>
-        <div class="bar"><div id="dd-bar" style="width:0%"></div></div>
-        <p class="asof" id="dd-asof"></p>
+      <div class="tallies">
+        <div class="tally" id="dd-tally">
+          <span class="num" id="dd-count">0</span>
+          <p class="of"><span id="dd-label">applications submitted</span> of 5,500 across all 12 sites</p>
+          <div class="bar"><div id="dd-bar" style="width:0%"></div></div>
+          <p class="asof" id="dd-asof"></p>
+        </div>
+        <div class="tally" id="dd-window">
+          <span class="num" id="dd-days">&mdash;</span>
+          <p class="of" id="dd-days-label">days left to enroll</p>
+          <div class="bar"><div id="dd-window-bar" style="width:0%"></div></div>
+          <p class="asof" id="dd-window-note">Enrollment closes December 23, 2026</p>
+        </div>
       </div>
+
+      <h3 class="sectitle">Program timeline</h3>
+      <ul class="tl">
+        <li>
+          <span class="when">October 1, 2026</span>
+          <p class="what">Enrollment opens. Staff begin enrolling families at visits.</p>
+        </li>
+        <li>
+          <span class="when">Every 31 days, six times</span>
+          <p class="what">Each enrolled family receives a fresh balance. The first arrives when their eCard is issued, so the cycle start date differs from family to family.</p>
+        </li>
+        <li>
+          <span class="when">December 23, 2026</span>
+          <p class="what">Enrollment closes. This is where your staff's involvement ends.</p>
+        </li>
+        <li class="off">
+          <span class="when">Into June 2027</span>
+          <p class="what">Families who enrolled in December finish their six cycles. Nothing is required from your site during this stretch.</p>
+        </li>
+      </ul>
 
       <p class="whatsnew"><strong>Latest update.</strong> The intro call is September 24 and the recording goes up under Training &amp; Support afterward. Training modules go out September 25. Enrollment opens October 1.</p>
     </div>
@@ -400,7 +482,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <p><strong>Who is eligible.</strong> Any child under age 3 in a family that meets WIC income guidelines (185% FPL). One enrollment per child. Families already using another diaper bank are still eligible.</p>
       </div>
 
-      <h3>The steps</h3>
+      <h3>The steps <span class="chip">About 5 minutes</span></h3>
       <ol class="steps">
         <li>Open your site's enrollment link on your tablet or computer. Each site has its own link.</li>
         <li>Hand it to the family or walk them through it. The form takes about 5 minutes and includes 3 short evaluation questions.</li>
@@ -420,19 +502,47 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>What to tell the family about what happens next</h3>
-        <p>They will get a text with a verification link right away, and they need to click it. Within one business day of clicking, their eCard arrives by text. Their 6 month benefit starts when the card is issued. Everything after that, including retailer instructions and the support contact, is texted to them.</p>
-        <p>One thing worth saying explicitly: <strong>the balance has to be used within 31 days.</strong> It does not carry over. A family who waits to save up will lose what they did not spend.</p>
+        <ul class="tl">
+          <li>
+            <span class="when">Right away</span>
+            <p class="what">A text arrives with a verification link. <strong>They have to click it.</strong> Nothing moves until they do, and this is where families most often stall.</p>
+          </li>
+          <li>
+            <span class="when">Within one business day</span>
+            <p class="what">Their eCard arrives by text, along with retailer instructions and the support number.</p>
+          </li>
+          <li>
+            <span class="when">When the card is issued</span>
+            <p class="what">The first balance loads and the six cycle benefit begins. The clock starts here, not at enrollment.</p>
+          </li>
+          <li>
+            <span class="when">Every 31 days, six times</span>
+            <p class="what">A fresh balance replaces the old one. <strong>Anything unspent is removed</strong>, so it has to be used inside the cycle.</p>
+          </li>
+          <li class="off">
+            <span class="when">From then on</span>
+            <p class="what">The Diaper Dollars support team handles everything. Your site is not involved again.</p>
+          </li>
+        </ul>
       </div>
 
       <div class="subsection">
         <h3>Why the evaluation questions are on the form</h3>
         <p>Families may ask why the form has extra questions. Here is what to tell them, depending on your site type. Individual responses are never shared with your site.</p>
-
-        <h4>WIC clinics</h4>
-        <p>The form asks whether the family has ever gotten free diapers from a local organization, what made it hard if they have, and whether a lack of diapers has caused them to miss work, skip changes, or cut back on other essentials. These help the state document what diaper access looks like in counties with no diaper bank.</p>
-
-        <h4>Home visiting programs</h4>
-        <p>The form asks whether the family had connected to WIC, Medicaid, SNAP, or childcare assistance before this visit, whether they had a plan for getting diapers, and how concerned they are about affording diapers in the coming months. These help the state understand whether home visiting is an effective way to connect families to this benefit.</p>
+        <div class="qcards">
+          <div>
+            <h4>WIC clinics</h4>
+            <span class="q">Three questions about diaper access</span>
+            <p>Whether the family has ever received free diapers from a local organization, what made that difficult if they have, and whether running short has caused them to miss work, skip changes, or cut back on other essentials.</p>
+            <p class="why">These document what diaper access looks like in counties with no diaper bank.</p>
+          </div>
+          <div>
+            <h4>Home visiting programs</h4>
+            <span class="q">Three questions about connection to benefits</span>
+            <p>Whether the family had already connected to WIC, Medicaid, SNAP, or childcare assistance before this visit, whether they had a plan for getting diapers, and how concerned they are about affording diapers in the coming months.</p>
+            <p class="why">These test whether home visiting is an effective way to connect families to this benefit.</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -503,28 +613,6 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
           </table>
         </div>
         <p class="tnote">The short version: if a family qualifies for WIC, they qualify for this.</p>
-      </div>
-
-      <div class="subsection">
-        <h3>Timeline</h3>
-        <ul class="tl">
-          <li>
-            <span class="when">October 1, 2026</span>
-            <p class="what">Enrollment opens. Staff begin enrolling families at visits.</p>
-          </li>
-          <li>
-            <span class="when">Every 31 days, six times</span>
-            <p class="what">Each enrolled family receives a fresh balance. The first arrives when their eCard is issued, so the cycle start date differs from family to family.</p>
-          </li>
-          <li>
-            <span class="when">December 23, 2026</span>
-            <p class="what">Enrollment closes. This is where your staff's involvement ends.</p>
-          </li>
-          <li class="off">
-            <span class="when">Into June 2027</span>
-            <p class="what">Families who enrolled in December finish their six cycles. Nothing is required from your site during this stretch.</p>
-          </li>
-        </ul>
       </div>
 
       <div class="subsection">
@@ -665,22 +753,67 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>Why it exists</h3>
-        <p>No federal program covers diapers. SNAP, WIC, TANF, and Medicaid all exclude them. A month's supply costs $70 to $100 per child, and one in two families with young children cannot consistently afford the diapers they need. When families run short, children stay in wet diapers longer, parents miss work because childcare requires a daily diaper supply, and families cut back on food or medicine to cover the gap.</p>
+        <p>No federal program covers diapers. Every major benefit a young family is likely to already receive leaves them out:</p>
+        <ul class="excl">
+          <li><strong>SNAP</strong><span>&#10005; Excludes diapers</span></li>
+          <li><strong>WIC</strong><span>&#10005; Excludes diapers</span></li>
+          <li><strong>TANF</strong><span>&#10005; Excludes diapers</span></li>
+          <li><strong>Medicaid</strong><span>&#10005; Excludes diapers</span></li>
+        </ul>
+        <div class="stats">
+          <div><span class="fig">$70&ndash;100</span><p>What a month's supply costs, per child.</p></div>
+          <div><span class="fig">1 in 2</span><p>Families with young children who cannot consistently afford the diapers they need.</p></div>
+        </div>
+        <p>When families run short, children stay in wet diapers longer, parents miss work because childcare requires a daily diaper supply, and families cut back on food or medicine to cover the gap.</p>
       </div>
 
       <div class="subsection">
         <h3>How it works</h3>
-        <p>Instead of distributing physical diapers, the program loads a monthly benefit onto a digital eCard that families use at retailers they already shop at. That means no warehouses, no volunteer coordination, and no transportation logistics. Families choose their own brand and size. The model was built to work through existing enrollment channels like WIC clinics and home visiting programs, so the state does not have to build new infrastructure.</p>
+        <p>Instead of distributing physical diapers, the program loads a benefit onto a digital eCard that families use at retailers they already shop at.</p>
+        <div class="tscroll">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">Physical distribution</th>
+                <th scope="col">Diaper Dollars</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Storage</th><td>Warehouse space and pallets</td><td>None</td></tr>
+              <tr><th scope="row">Staffing</th><td>Volunteer coordination</td><td>None</td></tr>
+              <tr><th scope="row">Reaching families</th><td>Families travel to a distribution site</td><td>Families shop where they already shop</td></tr>
+              <tr><th scope="row">Brand and size</th><td>Whatever is in stock</td><td>The family chooses</td></tr>
+              <tr><th scope="row">Adding a site</th><td>New infrastructure</td><td>Existing WIC and home visiting channels</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div class="subsection">
         <h3>What previous years have shown</h3>
-        <p>The program has operated across multiple regions in Illinois. Over 92% of enrolled families report reducing or eliminating their need for emergency diaper sources after enrolling. The eCard model has launched at new sites quickly and with minimal disruption to existing workflows.</p>
+        <p>The program has operated across multiple regions in Illinois.</p>
+        <div class="stats">
+          <div><span class="fig">92%</span><p>Of enrolled families report reducing or eliminating their need for emergency diaper sources after enrolling.</p></div>
+        </div>
+        <p>The eCard model has launched at new sites quickly and with minimal disruption to existing workflows.</p>
       </div>
 
       <div class="subsection">
         <h3>What this year is testing</h3>
-        <p>FY27 is focused on two questions. First, can the program serve as the primary diaper resource in counties that have no diaper bank or organized diaper assistance at all? Every WIC site in this year's program is in a county identified as having zero existing diaper distribution. Second, is a WIC clinic the best way to reach families, or can home visiting programs enroll families just as effectively? Two home visiting programs are participating alongside the WIC sites so the state can compare enrollment, utilization, and reach across both models.</p>
+        <p>FY27 is built around two questions.</p>
+        <div class="qcards">
+          <div>
+            <h4>Question one</h4>
+            <span class="q">Can this be the primary diaper resource where nothing else exists?</span>
+            <p>Every WIC site in this year's program sits in a county identified as having zero existing diaper distribution.</p>
+          </div>
+          <div>
+            <h4>Question two</h4>
+            <span class="q">Is a WIC clinic the best way to reach families?</span>
+            <p>Two home visiting programs are participating alongside the WIC sites, so the state can compare enrollment, utilization, and reach across both models.</p>
+          </div>
+        </div>
         <p>The answers will inform whether and how the program expands in future years.</p>
       </div>
     </div>
@@ -867,6 +1000,43 @@ if (window.ResizeObserver) {
   new ResizeObserver(ddReportHeight).observe(document.body);
 }
 
+/* ---------- Enrollment window countdown ---------- */
+var DD_OPEN  = new Date(2026, 9, 1);        // October 1 2026, local time
+var DD_CLOSE = new Date(2026, 11, 23, 23, 59, 59);
+
+function ddWindow() {
+  var num = document.getElementById('dd-days');
+  var label = document.getElementById('dd-days-label');
+  var bar = document.getElementById('dd-window-bar');
+  var note = document.getElementById('dd-window-note');
+  var tile = document.getElementById('dd-window');
+  if (!num) return;
+
+  var now = new Date();
+  var DAY = 86400000;
+
+  if (now < DD_OPEN) {
+    num.textContent = Math.ceil((DD_OPEN - now) / DAY);
+    label.textContent = (num.textContent === '1' ? 'day' : 'days') + ' until enrollment opens';
+    bar.style.width = '0%';
+    note.textContent = 'Opens October 1, then runs through December 23, 2026';
+  } else if (now <= DD_CLOSE) {
+    num.textContent = Math.ceil((DD_CLOSE - now) / DAY);
+    label.textContent = (num.textContent === '1' ? 'day' : 'days') + ' left to enroll';
+    bar.style.width = Math.min(100, ((now - DD_OPEN) / (DD_CLOSE - DD_OPEN)) * 100) + '%';
+    note.textContent = 'Enrollment closes December 23, 2026';
+  } else {
+    tile.classList.add('closed');
+    num.textContent = 'Closed';
+    label.textContent = 'enrollment has ended';
+    bar.style.width = '100%';
+    note.textContent = 'Closed December 23, 2026. Enrolled families keep their benefit.';
+  }
+  ddReportHeight();
+}
+ddWindow();
+setInterval(ddWindow, 60 * 60 * 1000);
+
 /* ---------- Live counter ---------- */
 var ddGotCount = false;
 
@@ -895,7 +1065,7 @@ function ddLoadCount() {
          zero families have applied, which is a claim, not a blank. No error
          message either: a broken counter is not a clinic's problem to solve. */
       if (!ddGotCount) {
-        var tally = document.querySelector('.mod-dd .tally');
+        var tally = document.getElementById('dd-tally');
         if (tally) { tally.style.display = 'none'; ddReportHeight(); }
       }
     });
