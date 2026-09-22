@@ -149,10 +149,6 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 }
 .mod-dd .ends b { color: var(--cream); font-weight: 600; }
 
-.mod-dd .whatsnew {
-  background: var(--white); border: 1px solid var(--med-gray); border-left: 5px solid var(--yellow);
-  border-radius: 10px; padding: 16px 20px; font-size: 15px; color: #3C5555; margin: 0; max-width: none;
-}
 
 /* ---------- Shared blocks ---------- */
 .mod-dd .back {
@@ -428,9 +424,9 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       </div>
       <nav class="secnav" aria-label="Resource center">
         <button type="button" onclick="ddGo('home')" class="active" id="nav-home" aria-current="page">Home</button>
-        <button type="button" onclick="ddGo('enroll')" id="nav-enroll">Enroll a Family</button>
         <button type="button" onclick="ddGo('program')" id="nav-program">How It Works</button>
         <button type="button" onclick="ddGo('card')" id="nav-card">The Card</button>
+        <button type="button" onclick="ddGo('enroll')" id="nav-enroll">Enroll a Family</button>
         <button type="button" onclick="ddGo('about')" id="nav-about">About the DDPP</button>
         <button type="button" onclick="ddGo('support')" id="nav-support">Training &amp; Support</button>
       </nav>
@@ -448,20 +444,20 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <p class="lede">This page is for staff at participating sites for the FY27 Diaper Distribution Pilot Program. Enrollment steps, family questions, training, and support all live here.</p>
 
       <div class="cards">
-        <button type="button" class="card" onclick="ddGo('enroll')">
-          <h3>Enroll a Family</h3>
-          <p>The step by step workflow, and what to tell families about what happens next.</p>
-          <span class="go">Start here</span>
-        </button>
         <button type="button" class="card" onclick="ddGo('program')">
           <h3>How It Works</h3>
-          <p>The benefit, where the card works, eligibility, timeline, and what you are not responsible for.</p>
+          <p>The benefit, what the card buys, where it works, online ordering, and who is eligible.</p>
           <span class="go">Look it up</span>
         </button>
         <button type="button" class="card" onclick="ddGo('card')">
           <h3>The Card</h3>
           <p>What families see when they open their link, how they pay, and the one step that trips people up.</p>
           <span class="go">Walk through it</span>
+        </button>
+        <button type="button" class="card" onclick="ddGo('enroll')">
+          <h3>Enroll a Family</h3>
+          <p>The step by step workflow, and what to tell families about what happens next.</p>
+          <span class="go">Start here</span>
         </button>
         <button type="button" class="card" onclick="ddGo('about')">
           <h3>About the DDPP</h3>
@@ -510,7 +506,19 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       </div>
 
-      <p class="whatsnew"><strong>Latest update.</strong> The intro call is September 24 and the recording goes up under Training &amp; Support afterward. Training modules go out September 25. Enrollment opens October 1.</p>
+      <h3 class="sectitle">Who to call</h3>
+      <div class="contacts">
+        <div class="who">
+          <h3>For families: the card</h3>
+          <p>Trouble opening the card, or a payment that will not go through at the register. This number is printed on the card, so families may already have it:</p>
+          <p class="detail"><a href="tel:+18882535667">888-253-5667</a></p>
+        </div>
+        <div class="who">
+          <h3>For site staff: the program</h3>
+          <p>Enrollment questions, a lost enrollment link, or anything about how the pilot runs:</p>
+          <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
+        </div>
+      </div>
     </div>
 
     <!-- ========== ENROLL ========== -->
@@ -711,28 +719,6 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
           </table>
         </div>
         <p class="tnote">The short version: if a family qualifies for WIC, they qualify for this.</p>
-      </div>
-
-      <div class="subsection">
-        <h3>Timeline</h3>
-        <ul class="tl">
-          <li>
-            <span class="when">October 1, 2026</span>
-            <p class="what">Enrollment opens. Staff begin enrolling families at visits.</p>
-          </li>
-          <li>
-            <span class="when">Every 31 days, six times</span>
-            <p class="what">Each enrolled family receives a fresh balance. The first arrives when their eCard is issued, so the cycle start date differs from family to family.</p>
-          </li>
-          <li>
-            <span class="when">December 23, 2026</span>
-            <p class="what">Enrollment closes. This is where your staff's involvement ends.</p>
-          </li>
-          <li class="off">
-            <span class="when">Into June 2027</span>
-            <p class="what">Families who enrolled in December finish their six cycles. Nothing is required from your site during this stretch.</p>
-          </li>
-        </ul>
       </div>
 
       <div class="subsection">
@@ -982,6 +968,10 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <p>No. The benefit is diapers only. Wipes, diaper creams, and adult incontinence products are all excluded. If a family rings up diapers and wipes together, the card covers the diapers and they will need another form of payment for the rest.</p>
       </details>
       <details class="faq">
+        <summary>What happens to families after enrollment closes in December?</summary>
+        <p>Nothing changes for them. December 23 only stops new families being added. Anyone already enrolled keeps receiving a balance every 31 days until their six cycles are finished, which runs into June 2027 for the last enrollees. Your site is not involved in any of it.</p>
+      </details>
+      <details class="faq">
         <summary>What happens to money a family does not spend?</summary>
         <p>It is removed at the end of the 31 day cycle and a fresh balance is issued. Unspent funds do not carry over and are not returned. Tell families this at enrollment, because a family saving up for a bulk purchase will lose the earlier balances without warning.</p>
       </details>
@@ -1058,7 +1048,7 @@ var DD_GOAL     = 5500;           // program target
 var DD_LABEL    = 'applications submitted';  // see note in the README about wording
 
 /* ---------- Section switching ---------- */
-var DD_SECTIONS = ['home', 'enroll', 'program', 'card', 'about', 'support'];
+var DD_SECTIONS = ['home', 'program', 'card', 'enroll', 'about', 'support'];
 
 function ddGo(id, opts) {
   if (DD_SECTIONS.indexOf(id) === -1) id = 'home';
