@@ -73,6 +73,20 @@ guess a height.
 This is the only time the MOD site is edited. Content changes after this happen
 through git and appear inside the existing iframe automatically.
 
+## Still to fill in
+
+| What | Where | Notes |
+|---|---|---|
+| Four training video links | Support section, `.video` blocks | The tiles render but nothing is clickable yet. |
+| Retailer logos | Program section, `.retailers` grid | Each tile is sized for a logo. Replace the brand name with `<img src="…" alt="Walmart">`; no other change needed. |
+| Monthly call dates | Support section | Three `[date TBD]` entries. |
+
+Enrollment links are deliberately **not** listed anywhere on the page. They are
+site specific, and a family enrolled through the wrong site's form is credited
+to that site, which corrupts the WIC-versus-home-visiting comparison this pilot
+year exists to measure. Staff who lose their link are pointed to their site
+coordinator or to support. Do not add them "for convenience."
+
 ## Why the function is a .mjs file
 
 Netlify runs functions as ES modules. A `.js` file using `export default`

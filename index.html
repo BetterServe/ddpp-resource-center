@@ -126,7 +126,15 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
   background: var(--white); border: 1px solid var(--med-gray); border-left: 5px solid var(--teal);
   border-radius: 10px; padding: 18px 22px; margin: 0 0 32px;
 }
-.mod-dd .callout p { margin: 0; }
+.mod-dd .callout p { margin: 0 0 12px; }
+.mod-dd .callout p:last-child { margin-bottom: 0; }
+.mod-dd .callout h3 { font-size: 17px; margin-bottom: 8px; }
+.mod-dd .callout.warn { border-left-color: var(--yellow); }
+.mod-dd .callout .detail { font-weight: 700; font-size: 16px; }
+
+/* Contact links: readable as links without shouting. */
+.mod-dd .detail a { text-decoration: none; border-bottom: 1px solid rgba(27,107,107,.35); }
+.mod-dd .detail a:hover { color: var(--med-green); border-bottom-color: var(--med-green); }
 
 .mod-dd .subsection { padding: 26px 0; border-bottom: 1px solid var(--med-gray); }
 .mod-dd .subsection:first-of-type { padding-top: 6px; }
@@ -154,6 +162,22 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .btn:hover { background: #A82B28; border-color: #A82B28; }
 .mod-dd .btn.secondary { background: transparent; color: var(--green); border-color: var(--green); }
 .mod-dd .btn.secondary:hover { background: var(--green); color: var(--cream); }
+
+/* ---------- Retailer grid ----------
+   Each tile is sized to take a logo image later. To swap one in, replace the
+   brand name with <img src="…" alt="Walmart">; the tile needs no other change. */
+.mod-dd .retailers {
+  list-style: none; padding: 0; margin: 20px 0 14px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(134px, 1fr)); gap: 10px;
+}
+.mod-dd .retailers li {
+  background: var(--white); border: 1px solid var(--med-gray); border-radius: 8px;
+  min-height: 64px; padding: 10px 12px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; font-size: 14px; font-weight: 600; line-height: 1.3; color: #3C5555;
+}
+.mod-dd .retailers li img { max-height: 32px; width: auto; }
+.mod-dd .retailers-note { font-size: 14px; color: var(--dark-gray); }
 
 /* ---------- Support page ---------- */
 .mod-dd .contacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; margin: 4px 0 40px; }
@@ -298,12 +322,19 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <h3>The steps</h3>
       <ol class="steps">
-        <li>Open your site's enrollment link on your tablet or computer.</li>
+        <li>Open your site's enrollment link on your tablet or computer. Each site has its own link.</li>
         <li>Hand it to the family or walk them through it. The form takes about 5 minutes and includes 3 short evaluation questions.</li>
         <li>The family completes the form and agrees to the terms and conditions. If you are assisting, check the staff attestation box.</li>
         <li>The family submits. They get a text with a verification link right away.</li>
         <li>Done. Nothing else is needed from you.</li>
       </ol>
+
+      <div class="callout warn">
+        <h3>Lost your enrollment link?</h3>
+        <p>Enrollment links are specific to your site and are not published on this page. That is deliberate. A family enrolled through another site's form is credited to that site, which distorts both your numbers and the state's comparison of WIC clinics against home visiting programs &mdash; the central question this pilot year is built to answer.</p>
+        <p><strong>To get your link back:</strong> ask your site coordinator first. If they cannot find it, contact support and we will reissue it to you directly.</p>
+        <p class="detail"><a href="tel:+18446632655">844-663-2655</a> &nbsp;&middot;&nbsp; <a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
+      </div>
 
       <button type="button" class="btn secondary" onclick="ddGo('support')">Having trouble?</button>
 
@@ -337,8 +368,18 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>Where the card works</h3>
-        <p>Walmart, Albertsons (Jewel-Osco), Kroger stores (Food 4 Less, Mariano's), Walgreens, CVS, Dollar General, Family Dollar, and more. The card runs on the OTC network, which these retailers already accept. Families can use it at the register, at self checkout, or online depending on the store. Retailer specific instructions are texted to families with their card.</p>
-        <a class="btn secondary" href="#">Full retailer list</a>
+        <p>The card runs on the OTC network, which major grocery and pharmacy chains already accept. Families can use it at the register, at self checkout, or online depending on the store. Retailer specific instructions are texted to families with their card.</p>
+        <ul class="retailers">
+          <li>Walmart</li>
+          <li>Jewel-Osco</li>
+          <li>Mariano's</li>
+          <li>Food 4 Less</li>
+          <li>Walgreens</li>
+          <li>CVS</li>
+          <li>Dollar General</li>
+          <li>Family Dollar</li>
+        </ul>
+        <p class="retailers-note">Not a complete list. Families get full retailer details by text when their card is issued.</p>
       </div>
 
       <div class="subsection">
@@ -400,12 +441,12 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <div class="who">
           <h3>For families</h3>
           <p>If a family calls your clinic with an eCard question, give them this:</p>
-          <p class="detail">[Support phone]<br>[Support email]</p>
+          <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
         </div>
         <div class="who">
           <h3>For site staff</h3>
-          <p>Questions about the program, enrollment, or anything else:</p>
-          <p class="detail">Brendan Kitt<br>[email]<br>[phone]</p>
+          <p>Questions about the program, enrollment, or a lost enrollment link. Ask for the DDPP program team:</p>
+          <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
         </div>
       </div>
 
@@ -429,6 +470,10 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <h3 class="sectitle">Frequently asked questions</h3>
 
+      <details class="faq">
+        <summary>Why is our enrollment link not on this page?</summary>
+        <p>Enrollment forms are site specific and access to them is controlled for quality assurance. If links were published here, a family could be enrolled through the wrong site's form, which credits them to that site and distorts the state's comparison of WIC clinics against home visiting programs. If you have lost your link, ask your site coordinator, or call 844-663-2655 and we will reissue it.</p>
+      </details>
       <details class="faq">
         <summary>Do we enroll babies only, or can we enroll toddlers too?</summary>
         <p>Any child under age 3. Newborns, infants, and toddlers all qualify.</p>
