@@ -102,7 +102,10 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
 /* ---------- Home: enrollment counter ---------- */
 /* ---------- Home: the two status bars ---------- */
-.mod-dd .panels { display: grid; gap: 16px; margin-bottom: 24px; }
+.mod-dd .panels {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(298px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
 .mod-dd .panel {
   background: var(--green); border-radius: 14px;
   padding: 26px 30px 22px; color: var(--cream);
@@ -141,7 +144,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 }
 .mod-dd .panel.closed .track .dot { background: var(--med-gray); box-shadow: 0 0 0 2px var(--med-gray); }
 .mod-dd .ends {
-  display: flex; justify-content: space-between; gap: 14px;
+  display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;
   font-size: 13px; color: var(--med-gray);
 }
 .mod-dd .ends b { color: var(--cream); font-weight: 600; }
@@ -481,17 +484,17 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
             <div class="dot" id="dd-window-dot"></div>
           </div>
           <div class="ends">
-            <span><b>October 1, 2026</b></span>
-            <span><b>December 23, 2026</b></span>
+            <span><b>Oct 1, 2026</b></span>
+            <span><b>Dec 23, 2026</b></span>
           </div>
         </div>
 
         <div class="panel" id="dd-tally">
           <div class="phead">
-            <h3>Enrollment progress</h3>
+            <h3>Enrollment goal</h3>
             <span class="pmeta" id="dd-asof">Checking&hellip;</span>
           </div>
-          <p class="pbig"><strong id="dd-count">0</strong><span id="dd-label">applications submitted</span></p>
+          <p class="pbig"><strong id="dd-count">&mdash;</strong><span id="dd-label">applications submitted</span></p>
           <div class="track">
             <div class="fill" id="dd-bar"></div>
           </div>
@@ -1123,12 +1126,16 @@ function ddLoadCount() {
       ddReportHeight();
     })
     .catch(function () {
-      /* Never got a number. Hide the tile rather than tell 12 sites that
-         zero families have applied, which is a claim, not a blank. No error
-         message either: a broken counter is not a clinic's problem to solve. */
+      /* Never got a number. Keep the box: it is half of the home page's
+         purpose. Show a dash rather than 0, which would be a claim that no
+         family has applied, and say plainly that the feed is not connected. */
       if (!ddGotCount) {
-        var tally = document.getElementById('dd-tally');
-        if (tally) { tally.style.display = 'none'; ddReportHeight(); }
+        document.getElementById('dd-count').textContent = '—';
+        document.getElementById('dd-label').textContent = 'not connected yet';
+        document.getElementById('dd-asof').textContent = 'Awaiting data source';
+        document.getElementById('dd-pct').textContent = '';
+        document.getElementById('dd-bar').style.width = '0%';
+        ddReportHeight();
       }
     });
 }
