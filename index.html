@@ -22,7 +22,7 @@
   --teal: #64E8E4;
   --cream: #EBE9E3;
   --med-gray: #B8B6B1;
-  --dark-gray: #858380;
+  --dark-gray: #67655F;
   --yellow: #FFC44D;
   --red: #CC3633;
   --coral: #FF7D7D;
@@ -44,6 +44,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd *, .mod-dd *::before, .mod-dd *::after { box-sizing: border-box; }
 .mod-dd img { max-width: 100%; height: auto; display: block; }
 .mod-dd a { color: inherit; }
+.mod-dd button { font: inherit; color: inherit; background: none; border: 0; margin: 0; padding: 0; text-align: left; cursor: pointer; }
 .mod-dd :focus-visible { outline: 3px solid var(--med-green); outline-offset: 2px; border-radius: 2px; }
 
 /* ---------- Diaper Dollars bar + section nav ---------- */
@@ -59,13 +60,13 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
   border-left: 1px solid rgba(235,233,227,.28); padding-left: 14px;
 }
 .mod-dd .secnav { display: flex; gap: 6px; flex-wrap: wrap; }
-.mod-dd .secnav a {
+.mod-dd .secnav button {
   color: var(--cream); text-decoration: none; cursor: pointer;
   font-size: 14px; font-weight: 500; padding: 7px 13px; border-radius: 999px;
   transition: background .15s, color .15s;
 }
-.mod-dd .secnav a:hover { background: rgba(100,232,228,.14); }
-.mod-dd .secnav a.active { background: var(--teal); color: var(--green); font-weight: 700; }
+.mod-dd .secnav button:hover { background: rgba(100,232,228,.14); }
+.mod-dd .secnav button.active { background: var(--teal); color: var(--green); font-weight: 700; }
 
 /* ---------- Page shell ---------- */
 .mod-dd .wrap { max-width: var(--wrap); margin: 0 auto; padding: 46px 22px 70px; }
@@ -97,7 +98,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .card:hover { border-color: var(--med-green); background: #FCFCFB; }
 .mod-dd .card h3 { font-size: 19px; margin-bottom: 7px; }
 .mod-dd .card p { margin: 0; font-size: 15px; color: var(--dark-gray); line-height: 1.55; }
-.mod-dd .card .go { margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--med-green); }
+.mod-dd .card .go { display: block; margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--med-green); }
 
 /* ---------- Home: enrollment counter ---------- */
 .mod-dd .tally { background: var(--green); border-radius: 14px; padding: 30px 30px 26px; color: var(--cream); margin-bottom: 20px; }
@@ -211,7 +212,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 @media (max-width: 720px) {
   .mod-dd .ddbar .inner { padding: 14px 18px; gap: 14px; }
   .mod-dd .secnav { width: 100%; gap: 4px; }
-  .mod-dd .secnav a { padding: 6px 11px; font-size: 13px; }
+  .mod-dd .secnav button { padding: 6px 11px; font-size: 13px; }
   .mod-dd .wrap { padding: 32px 18px 52px; }
   .mod-dd .tally { padding: 24px 22px; }
 }
@@ -233,11 +234,11 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <span>Illinois DDPP Resource Center</span>
       </div>
       <nav class="secnav" aria-label="Resource center">
-        <a onclick="ddGo('home')" class="active" id="nav-home" tabindex="0" role="link">Home</a>
-        <a onclick="ddGo('enroll')" id="nav-enroll" tabindex="0" role="link">Enroll a Family</a>
-        <a onclick="ddGo('program')" id="nav-program" tabindex="0" role="link">How It Works</a>
-        <a onclick="ddGo('about')" id="nav-about" tabindex="0" role="link">About the DDPP</a>
-        <a onclick="ddGo('support')" id="nav-support" tabindex="0" role="link">Training &amp; Support</a>
+        <button type="button" onclick="ddGo('home')" class="active" id="nav-home" aria-current="page">Home</button>
+        <button type="button" onclick="ddGo('enroll')" id="nav-enroll">Enroll a Family</button>
+        <button type="button" onclick="ddGo('program')" id="nav-program">How It Works</button>
+        <button type="button" onclick="ddGo('about')" id="nav-about">About the DDPP</button>
+        <button type="button" onclick="ddGo('support')" id="nav-support">Training &amp; Support</button>
       </nav>
     </div>
   </div>
@@ -253,26 +254,26 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <p class="lede">This page is for staff at participating sites for the FY27 Diaper Distribution Pilot Program. Enrollment steps, family questions, training, and support all live here.</p>
 
       <div class="cards">
-        <div class="card" onclick="ddGo('enroll')">
+        <button type="button" class="card" onclick="ddGo('enroll')">
           <h3>Enroll a Family</h3>
           <p>The step by step workflow, and what to tell families about what happens next.</p>
-          <div class="go">Start here</div>
-        </div>
-        <div class="card" onclick="ddGo('program')">
+          <span class="go">Start here</span>
+        </button>
+        <button type="button" class="card" onclick="ddGo('program')">
           <h3>How It Works</h3>
           <p>The benefit, where the card works, eligibility, timeline, and what you are not responsible for.</p>
-          <div class="go">Look it up</div>
-        </div>
-        <div class="card" onclick="ddGo('about')">
+          <span class="go">Look it up</span>
+        </button>
+        <button type="button" class="card" onclick="ddGo('about')">
           <h3>About the DDPP</h3>
           <p>What the program is, why it exists, and what this pilot year is designed to learn.</p>
-          <div class="go">Read the background</div>
-        </div>
-        <div class="card" onclick="ddGo('support')">
+          <span class="go">Read the background</span>
+        </button>
+        <button type="button" class="card" onclick="ddGo('support')">
           <h3>Training &amp; Support</h3>
           <p>Training videos, FAQ, contact information, and monthly call recordings.</p>
-          <div class="go">Get help</div>
-        </div>
+          <span class="go">Get help</span>
+        </button>
       </div>
 
       <div class="tally">
@@ -282,12 +283,12 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <p class="asof" id="dd-asof"></p>
       </div>
 
-      <p class="whatsnew"><strong>Latest update.</strong> Enrollment opens October 1. Training modules go out September 25. The intro call recording is posted under Training &amp; Support.</p>
+      <p class="whatsnew"><strong>Latest update.</strong> The intro call is September 24 and the recording goes up under Training &amp; Support afterward. Training modules go out September 25. Enrollment opens October 1.</p>
     </div>
 
     <!-- ========== ENROLL ========== -->
     <div class="page" id="enroll">
-      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <button type="button" class="back" onclick="ddGo('home')">&larr; Resource Center home</button>
       <h2>Enroll a family.</h2>
       <p class="lede">Five minutes at the visit. Nothing after that.</p>
 
@@ -304,7 +305,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         <li>Done. Nothing else is needed from you.</li>
       </ol>
 
-      <a class="btn secondary" onclick="ddGo('support')" tabindex="0" role="link">Having trouble?</a>
+      <button type="button" class="btn secondary" onclick="ddGo('support')">Having trouble?</button>
 
       <div class="subsection">
         <h3>What to tell the family about what happens next</h3>
@@ -325,7 +326,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
     <!-- ========== PROGRAM ========== -->
     <div class="page" id="program">
-      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <button type="button" class="back" onclick="ddGo('home')">&larr; Resource Center home</button>
       <h2>How the program works.</h2>
       <p class="lede">Reference information for answering family questions. Each section is short. If you need more, check the FAQ.</p>
 
@@ -358,7 +359,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
     <!-- ========== ABOUT ========== -->
     <div class="page" id="about">
-      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <button type="button" class="back" onclick="ddGo('home')">&larr; Resource Center home</button>
       <h2>About the Diaper Distribution Pilot Program.</h2>
       <p class="lede">A state funded test of whether Illinois can put a monthly diaper benefit in families' hands through the systems they already use.</p>
 
@@ -391,7 +392,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
     <!-- ========== SUPPORT ========== -->
     <div class="page" id="support">
-      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <button type="button" class="back" onclick="ddGo('home')">&larr; Resource Center home</button>
       <h2>Training and support.</h2>
       <p class="lede">Who to call, what to watch, and answers to what sites ask most.</p>
 
@@ -423,7 +424,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       </div>
       <div class="video">
         <div class="thumb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
-        <div class="meta"><strong>Intro call recording, September 24</strong><span>Full recording of the kickoff Q and A session. About 45 minutes.</span></div>
+        <div class="meta"><strong>Intro call recording, September 24</strong><span>Posted after the call. Full recording of the kickoff Q and A session.</span></div>
       </div>
 
       <h3 class="sectitle">Frequently asked questions</h3>
@@ -493,31 +494,56 @@ var DD_GOAL     = 5500;           // program target
 var DD_LABEL    = 'applications submitted';  // see note in the README about wording
 
 /* ---------- Section switching ---------- */
-function ddGo(id) {
+var DD_SECTIONS = ['home', 'enroll', 'program', 'about', 'support'];
+
+function ddGo(id, opts) {
+  if (DD_SECTIONS.indexOf(id) === -1) id = 'home';
   var root = document.querySelector('.mod-dd');
   if (!root) return;
+  var quiet = opts && opts.quiet;
+
   root.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
   var target = root.querySelector('#' + id);
   if (target) target.classList.add('active');
-  root.querySelectorAll('.secnav a').forEach(function (a) { a.classList.remove('active'); });
+
+  root.querySelectorAll('.secnav button').forEach(function (b) {
+    b.classList.remove('active');
+    b.removeAttribute('aria-current');
+  });
   var nav = root.querySelector('#nav-' + id);
-  if (nav) nav.classList.add('active');
+  if (nav) { nav.classList.add('active'); nav.setAttribute('aria-current', 'page'); }
+
+  /* Keep the address in sync so a section can be linked to directly:
+     …netlify.app/#enroll opens the enrollment page. replaceState rather than
+     location.hash, which would make the parent page jump. */
+  try { history.replaceState(null, '', '#' + id); } catch (e) {}
+
+  /* Move focus into the new section, so keyboard and screen reader users
+     land on the content instead of being left behind on the nav bar. */
+  if (target && !quiet) {
+    var h = target.querySelector('h2');
+    if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+  }
+
   ddReportHeight();
-  ddScrollParentToTop();
+  if (!quiet) ddScrollParentToTop();
 }
 
-document.querySelectorAll('.mod-dd [role="link"]').forEach(function (el) {
-  el.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
-  });
-});
-
 /* ---------- Tell the parent page how tall we are ---------- */
+var ddLastHeight = 0, ddHeightPending = false;
+
 function ddReportHeight() {
-  var h = document.documentElement.scrollHeight;
-  if (window.parent !== window) {
-    window.parent.postMessage({ ddppHeight: h }, '*');
-  }
+  if (ddHeightPending) return;
+  ddHeightPending = true;
+  requestAnimationFrame(function () {
+    ddHeightPending = false;
+    var h = document.documentElement.scrollHeight;
+    if (Math.abs(h - ddLastHeight) < 2) return;   // ignore sub-pixel churn
+    ddLastHeight = h;
+    if (window.parent !== window) {
+      window.parent.postMessage({ ddppHeight: h }, '*');
+    }
+  });
 }
 function ddScrollParentToTop() {
   if (window.parent !== window) {
@@ -535,12 +561,15 @@ if (window.ResizeObserver) {
 }
 
 /* ---------- Live counter ---------- */
+var ddGotCount = false;
+
 function ddLoadCount() {
   fetch(DD_ENDPOINT, { cache: 'no-store' })
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (data) {
       var n = parseInt(data.count, 10);
       if (isNaN(n)) return;
+      ddGotCount = true;
       document.getElementById('dd-count').textContent = n.toLocaleString('en-US');
       document.getElementById('dd-label').textContent = DD_LABEL;
       var pct = Math.min(100, (n / DD_GOAL) * 100);
@@ -555,11 +584,25 @@ function ddLoadCount() {
       ddReportHeight();
     })
     .catch(function () {
-      /* Leave the zero in place rather than showing an error to clinic staff. */
+      /* Never got a number. Hide the tile rather than tell 12 sites that
+         zero families have applied, which is a claim, not a blank. No error
+         message either: a broken counter is not a clinic's problem to solve. */
+      if (!ddGotCount) {
+        var tally = document.querySelector('.mod-dd .tally');
+        if (tally) { tally.style.display = 'none'; ddReportHeight(); }
+      }
     });
 }
 ddLoadCount();
 setInterval(ddLoadCount, 10 * 60 * 1000);
+
+/* ---------- Open a section directly from the address, e.g. /#enroll ---------- */
+(function () {
+  var want = (location.hash || '').replace(/^#/, '');
+  if (want && want !== 'home' && DD_SECTIONS.indexOf(want) !== -1) {
+    ddGo(want, { quiet: true });
+  }
+})();
 </script>
 
 </body>
