@@ -331,11 +331,11 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 /* ---------- Retailer grid ----------
    Name blocks, not logo slots. Retailer logos are trademarks and clean
    licensed artwork was not worth chasing for twelve tiles. */
-.mod-dd .retailers {
+.mod-dd .retailers, .mod-dd .brands {
   list-style: none; padding: 0; margin: 20px 0 14px;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(142px, 1fr)); gap: 10px;
 }
-.mod-dd .retailers li {
+.mod-dd .retailers li, .mod-dd .brands li {
   background: var(--white); border: 1px solid var(--med-gray); border-radius: 8px;
   padding: 15px 14px;
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
@@ -614,6 +614,44 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
         </div>
         <p class="tnote">Three children is the household maximum. The six cycle totals assume each balance is spent in full &mdash; whatever is left over is removed at the end of every 31 day cycle and does not carry forward.</p>
         <p>The benefit runs six cycles from the date the eCard is issued, with no renewal. This is a limited pilot for State Fiscal Year 2027, and services beyond this year are not guaranteed.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What the card buys</h3>
+        <p>The benefit is diapers only. It is not general baby-care money, and that is the most common thing families get wrong about it.</p>
+        <div class="split">
+          <div class="yes">
+            <h4>Covered</h4>
+            <ul>
+              <li>Disposable diapers for children</li>
+              <li>Every size, newborn through toddler</li>
+              <li>National brands and store brands alike</li>
+            </ul>
+          </div>
+          <div class="no">
+            <h4>Not covered</h4>
+            <ul>
+              <li>Baby wipes</li>
+              <li>Diaper creams and ointments</li>
+              <li>Adult incontinence products</li>
+              <li>Anything else in the baby aisle</li>
+            </ul>
+          </div>
+        </div>
+        <p>If a family brings diapers and wipes to the register together, the card pays for the diapers only. The rest needs another form of payment, so it is worth mentioning before they shop rather than at checkout.</p>
+
+        <h4>Brands families will find</h4>
+        <ul class="brands">
+          <li>Pampers</li>
+          <li>Huggies</li>
+          <li>Luvs</li>
+          <li>Honest</li>
+          <li>Hello Bello</li>
+          <li>Seventh Generation</li>
+          <li>Cuties</li>
+          <li>Store brands</li>
+        </ul>
+        <p class="retailers-note">This is not an approved list. The product catalog is the authority, it differs by retailer, and it changes. <strong>Check a Product</strong> on the card settles any single item in a few seconds, in the aisle, before the family commits to it.</p>
       </div>
 
       <div class="subsection">
@@ -939,6 +977,10 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <h3 class="sectitle">Frequently asked questions</h3>
 
+      <details class="faq">
+        <summary>Can families buy wipes with the card?</summary>
+        <p>No. The benefit is diapers only. Wipes, diaper creams, and adult incontinence products are all excluded. If a family rings up diapers and wipes together, the card covers the diapers and they will need another form of payment for the rest.</p>
+      </details>
       <details class="faq">
         <summary>What happens to money a family does not spend?</summary>
         <p>It is removed at the end of the 31 day cycle and a fresh balance is issued. Unspent funds do not carry over and are not returned. Tell families this at enrollment, because a family saving up for a bulk purchase will lose the earlier balances without warning.</p>
