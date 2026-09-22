@@ -1,0 +1,2 @@
+# Normalize line endings so Windows edits do not show up as whole-file diffs.
+* text=auto eol=lf
