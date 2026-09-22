@@ -500,8 +500,15 @@ function ddReportHeight() {
   ddHeightPending = true;
   requestAnimationFrame(function () {
     ddHeightPending = false;
-    var h = document.documentElement.scrollHeight;
-    if (Math.abs(h - ddLastHeight) < 2) return;
+    /* Measure the content wrapper, never documentElement.scrollHeight.
+       Inside an iframe that value is at least the frame's own height, so
+       reporting it makes the parent grow the frame, which grows the value,
+       which grows the frame. The page ends up scrolling forever past its
+       own footer. .mod-dd wraps everything and is sized by its content. */
+    var root = document.querySelector('.mod-dd');
+    var h = root ? Math.ceil(root.getBoundingClientRect().height)
+                 : (document.body ? document.body.scrollHeight : 0);
+    if (!h || Math.abs(h - ddLastHeight) < 2) return;
     ddLastHeight = h;
     if (window.parent !== window) {
       window.parent.postMessage({ ddppHeight: h }, '*');

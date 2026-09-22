@@ -42,11 +42,40 @@
      handed. This file is the family guide. They go on different pages.
 -->
 
+<!--
+  STILL SEEING WHITE MARGINS LEFT AND RIGHT ON A WIDE SCREEN?
+
+  That is Elementor's container width, not this page. Check, in order:
+
+    a) The Section or Container: Layout tab -> Content Width -> Full Width.
+       "Boxed" is the default and caps it at the site content width.
+    b) Elementor -> Site Settings -> Layout -> Content Width. If the
+       section is Boxed, this is the number doing the capping (often
+       1140px), which is why the margins vanish when you narrow the
+       browser past it.
+    c) The theme may add its own page padding on wide screens.
+
+  If none of that gets you to the edge, delete the two comment markers
+  around the style block below and it will break out regardless. It is
+  left off by default because overflow-x on the body is a page-wide
+  change, and it can interfere with a sticky site header.
+
+<style>
+  #ddpp-family-frame {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+  body { overflow-x: hidden; }
+</style>
+
+-->
+
 <iframe
   id="ddpp-family-frame"
   src="https://ddpp-resource-center.netlify.app/families"
   title="Your Diaper Dollars Card"
-  style="width:100%; border:0; display:block; min-height:900px; height:3200px;"
+  style="width:100%; border:0; display:block; min-height:200px; height:3200px;"
   loading="lazy"></iframe>
 
 <script>
@@ -65,7 +94,7 @@
       var h = parseInt(e.data.ddppHeight, 10);
       // Ignore nonsense values rather than collapsing the page around them.
       if (!isNaN(h) && h > 200 && h < 20000) {
-        frame.style.height = (h + 20) + 'px';
+        frame.style.height = (h + 2) + 'px';
       }
     }
   });
