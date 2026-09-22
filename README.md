@@ -78,29 +78,15 @@ through git and appear inside the existing iframe automatically.
 | What | Where | Notes |
 |---|---|---|
 | Four training video links | Support section, `.video` blocks | The tiles render but nothing is clickable yet. |
-| Retailer logos | `img/retailers/` | Twelve files, see below. Tiles already reserve the space. |
 | Monthly call dates | Support section | Three `[date TBD]` entries. |
 | Fresh card screenshots | `img/` | Current ones show the old offer label "$40 IL WIC Diaper Support". Retake after the label changes to "Diaper Support". |
 
-### Retailer logos
+### The retailer grid
 
-Drop transparent PNGs or SVGs into `img/retailers/` using these names, and
-the tiles pick them up:
-
-```
-cub.png            food-4-less.png    meijer.png
-cvs.png            jewel.png          ruler.png
-dollar-general.png kroger.png         walgreens.png
-family-dollar.png  marianos.png       walmart.png
-```
-
-Roughly 200px wide is plenty; tiles render them at 30px tall. Until a file
-exists the tile shows the retailer's name, which is a working state, not a
-broken one.
-
-Source these from MOD's card platform or the OTC Network partner rather than
-pulling them off the web. Retailer logos are trademarks, and most copies
-online are licensed for editorial use only, which this is not.
+Deliberately name blocks, not logos. Retailer logos are trademarks and clean
+licensed artwork was not worth chasing for twelve tiles. If that changes, the
+list lives in the Program section under "Where the card works"; keep the
+twelve names and the three "Online too" badges in sync with the card platform.
 
 ### About the screenshots in `img/`
 
