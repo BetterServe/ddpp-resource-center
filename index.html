@@ -163,6 +163,72 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .btn.secondary { background: transparent; color: var(--green); border-color: var(--green); }
 .mod-dd .btn.secondary:hover { background: var(--green); color: var(--cream); }
 
+/* ---------- Data tables ---------- */
+.mod-dd .tscroll {
+  overflow-x: auto; margin: 20px 0 14px;
+  border: 1px solid var(--med-gray); border-radius: 10px; background: var(--white);
+}
+.mod-dd table.dt { border-collapse: collapse; width: 100%; min-width: 440px; font-size: 15px; }
+.mod-dd table.dt th, .mod-dd table.dt td {
+  padding: 13px 16px; text-align: left; vertical-align: top;
+  border-bottom: 1px solid var(--med-gray);
+}
+.mod-dd table.dt thead th {
+  background: var(--green); color: var(--cream);
+  font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  border-bottom: none;
+}
+.mod-dd table.dt tbody tr:last-child th,
+.mod-dd table.dt tbody tr:last-child td { border-bottom: none; }
+.mod-dd table.dt tbody th { font-weight: 700; color: var(--green); }
+.mod-dd table.dt .amt {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: 24px; color: var(--med-green); white-space: nowrap;
+}
+.mod-dd .tnote { font-size: 14px; color: var(--dark-gray); margin: 0 0 4px; }
+
+/* ---------- Timeline ---------- */
+.mod-dd .tl { list-style: none; padding: 0; margin: 22px 0 0; position: relative; }
+.mod-dd .tl::before {
+  content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px;
+  width: 2px; background: var(--med-gray);
+}
+.mod-dd .tl li { position: relative; padding: 0 0 24px 38px; max-width: 64ch; }
+.mod-dd .tl li:last-child { padding-bottom: 0; }
+.mod-dd .tl li::before {
+  content: ""; position: absolute; left: 4px; top: 5px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--med-green); box-shadow: 0 0 0 4px var(--cream);
+}
+.mod-dd .tl .when {
+  display: block; font-size: 13px; font-weight: 700; color: var(--med-green);
+  text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px;
+}
+.mod-dd .tl .what { margin: 0; font-size: 16px; }
+.mod-dd .tl .off::before { background: var(--med-gray); }
+.mod-dd .tl .off .when { color: var(--dark-gray); }
+
+/* ---------- You do / you do not ---------- */
+.mod-dd .split {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+  gap: 16px; margin: 22px 0 0;
+}
+.mod-dd .split > div {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-radius: 12px; padding: 22px 24px;
+}
+.mod-dd .split h4 {
+  margin: 0 0 13px; font-size: 14px; letter-spacing: .04em; text-transform: uppercase;
+}
+.mod-dd .split .yes h4 { color: var(--med-green); }
+.mod-dd .split .no h4 { color: var(--red); }
+.mod-dd .split ul { list-style: none; padding: 0; margin: 0; }
+.mod-dd .split li { position: relative; padding: 0 0 11px 28px; font-size: 15px; line-height: 1.5; }
+.mod-dd .split li:last-child { padding-bottom: 0; }
+.mod-dd .split li::before { position: absolute; left: 0; top: -1px; font-weight: 700; font-size: 16px; }
+.mod-dd .split .yes li::before { content: "✓"; color: var(--med-green); }
+.mod-dd .split .no li::before { content: "✕"; color: var(--red); }
+
 /* ---------- Screenshots ---------- */
 .mod-dd .shot { margin: 20px 0 0; }
 .mod-dd .shot img {
@@ -378,7 +444,25 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>The benefit</h3>
-        <p>$40 per child, loaded onto a digital eCard every 31 days. Up to 3 children per household, so $120 per cycle at most. It lasts 6 cycles from the date the eCard is issued, with no renewal. <strong>Each balance expires after 31 days and does not roll over.</strong> This is a limited pilot for State Fiscal Year 2027 and services beyond this year are not guaranteed.</p>
+        <p>A digital eCard, reloaded every 31 days for six cycles. The amount depends on how many children under 3 are in the household.</p>
+        <div class="tscroll">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th scope="col">Children under 3</th>
+                <th scope="col">Each 31 days</th>
+                <th scope="col">Across all 6 cycles</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">1 child</th><td class="amt">$40</td><td class="amt">$240</td></tr>
+              <tr><th scope="row">2 children</th><td class="amt">$80</td><td class="amt">$480</td></tr>
+              <tr><th scope="row">3 children</th><td class="amt">$120</td><td class="amt">$720</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tnote">Three children is the household maximum. The six cycle totals assume each balance is spent in full &mdash; whatever is left over is removed at the end of every 31 day cycle and does not carry forward.</p>
+        <p>The benefit runs six cycles from the date the eCard is issued, with no renewal. This is a limited pilot for State Fiscal Year 2027, and services beyond this year are not guaranteed.</p>
       </div>
 
       <div class="subsection">
@@ -399,17 +483,72 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       <div class="subsection">
         <h3>Eligibility</h3>
-        <p>Child under age 3. Family meets WIC income guidelines (185% FPL). If they are eligible for WIC, they qualify. Home visiting sites can also use Medicaid eligibility. One enrollment per child, no duplicates across sites. Families already receiving diapers from another program are still eligible.</p>
+        <div class="tscroll">
+          <table class="dt">
+            <thead>
+              <tr>
+                <th scope="col">Requirement</th>
+                <th scope="col">WIC clinics</th>
+                <th scope="col">Home visiting programs</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Child's age</th><td>Under 3</td><td>Under 3</td></tr>
+              <tr><th scope="row">Income</th><td>Meets WIC income guidelines (185% FPL)</td><td>WIC income guidelines, <strong>or</strong> Medicaid eligibility</td></tr>
+              <tr><th scope="row">Extra paperwork</th><td>None beyond your existing WIC process</td><td>None</td></tr>
+              <tr><th scope="row">Release of Information</th><td colspan="2">Not needed. The family consents on the form itself.</td></tr>
+              <tr><th scope="row">Enrollments per child</th><td colspan="2">One, across all 12 sites. No duplicates.</td></tr>
+              <tr><th scope="row">Already using a diaper bank</th><td colspan="2">Still eligible.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="tnote">The short version: if a family qualifies for WIC, they qualify for this.</p>
       </div>
 
       <div class="subsection">
         <h3>Timeline</h3>
-        <p>Enrollment runs October 1 through December 23, 2026. That is when your staff's involvement happens. After December 23, families keep receiving their benefit through the end of their 6 month window, which runs into June 2027 for December enrollees. Your staff are not involved after enrollment closes.</p>
+        <ul class="tl">
+          <li>
+            <span class="when">October 1, 2026</span>
+            <p class="what">Enrollment opens. Staff begin enrolling families at visits.</p>
+          </li>
+          <li>
+            <span class="when">Every 31 days, six times</span>
+            <p class="what">Each enrolled family receives a fresh balance. The first arrives when their eCard is issued, so the cycle start date differs from family to family.</p>
+          </li>
+          <li>
+            <span class="when">December 23, 2026</span>
+            <p class="what">Enrollment closes. This is where your staff's involvement ends.</p>
+          </li>
+          <li class="off">
+            <span class="when">Into June 2027</span>
+            <p class="what">Families who enrolled in December finish their six cycles. Nothing is required from your site during this stretch.</p>
+          </li>
+        </ul>
       </div>
 
       <div class="subsection">
-        <h3>What you are not responsible for</h3>
-        <p>No physical diapers. No warehouse, no pallets, no volunteers. No income verification beyond what you already do for WIC. No managing the eCard or fielding benefit questions. Once a family is enrolled, the Diaper Dollars support team handles everything. Families get the support number and email with their card.</p>
+        <h3>Your role</h3>
+        <div class="split">
+          <div class="yes">
+            <h4>You do</h4>
+            <ul>
+              <li>Open your site's enrollment link at the visit</li>
+              <li>Walk the family through about five minutes of questions</li>
+              <li>Check the staff attestation box if you are assisting</li>
+            </ul>
+          </div>
+          <div class="no">
+            <h4>You do not</h4>
+            <ul>
+              <li>Handle physical diapers, pallets, storage, or volunteers</li>
+              <li>Verify income beyond what you already do for WIC</li>
+              <li>Manage the eCard or field benefit questions</li>
+              <li>Do anything at all once the family has submitted</li>
+            </ul>
+          </div>
+        </div>
+        <p class="tnote">Once a family is enrolled, the Diaper Dollars support team handles everything. Families receive the support number and email with their card.</p>
       </div>
     </div>
 
