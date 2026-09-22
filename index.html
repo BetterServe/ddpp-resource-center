@@ -173,6 +173,26 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 }
 .mod-dd .back:hover { color: var(--red); }
 
+/* ---------- Eligibility criteria box ---------- */
+.mod-dd .elig {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-left: 5px solid var(--teal); border-radius: 12px;
+  padding: 24px 26px; margin: 0 0 30px;
+}
+.mod-dd .elig h3 { margin: 0 0 16px; font-size: 19px; }
+.mod-dd .elig dl { margin: 0; }
+.mod-dd .elig dl > div {
+  display: grid; grid-template-columns: 196px 1fr; gap: 4px 20px;
+  padding: 12px 0; border-top: 1px solid var(--med-gray);
+}
+.mod-dd .elig dl > div:first-child { border-top: none; padding-top: 0; }
+.mod-dd .elig dl > div:last-child { padding-bottom: 0; }
+.mod-dd .elig dt { font-weight: 700; color: var(--med-green); font-size: 15px; }
+.mod-dd .elig dd { margin: 0; font-size: 16px; }
+@media (max-width: 560px) {
+  .mod-dd .elig dl > div { grid-template-columns: 1fr; gap: 2px; }
+}
+
 .mod-dd .callout {
   background: var(--white); border: 1px solid var(--med-gray); border-left: 5px solid var(--teal);
   border-radius: 10px; padding: 18px 22px; margin: 0 0 32px;
@@ -644,10 +664,11 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
               </tr>
             </thead>
             <tbody>
-              <tr><th scope="row">Child's age</th><td>Under 3</td><td>Under 3</td></tr>
+              <tr><th scope="row">The child</th><td>Under 3, currently in diapers</td><td>Under 3, currently in diapers</td></tr>
               <tr><th scope="row">Income</th><td>Meets WIC income guidelines (185% FPL)</td><td>WIC income guidelines, <strong>or</strong> Medicaid eligibility</td></tr>
               <tr><th scope="row">Extra paperwork</th><td>None beyond your existing WIC process</td><td>None</td></tr>
               <tr><th scope="row">Release of Information</th><td colspan="2">Not needed. The family consents on the form itself.</td></tr>
+              <tr><th scope="row">Children per family</th><td colspan="2">Up to 3, each enrolled separately.</td></tr>
               <tr><th scope="row">Enrollments per child</th><td colspan="2">One, across all 12 sites. No duplicates.</td></tr>
               <tr><th scope="row">Already using a diaper bank</th><td colspan="2">Still eligible.</td></tr>
             </tbody>
@@ -787,8 +808,30 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <h2>Enroll a family.</h2>
       <p class="lede">Five minutes at the visit. Nothing after that.</p>
 
-      <div class="callout">
-        <p><strong>Who is eligible.</strong> Any child under age 3 in a family that meets WIC income guidelines (185% FPL). One enrollment per child. Families already using another diaper bank are still eligible.</p>
+      <div class="elig">
+        <h3>Who is eligible</h3>
+        <dl>
+          <div>
+            <dt>The child</dt>
+            <dd>Under age 3 <strong>and currently in diapers</strong>.</dd>
+          </div>
+          <div>
+            <dt>Income</dt>
+            <dd>Meets WIC income guidelines (185% FPL), or is Medicaid eligible. If a family qualifies for WIC, they qualify for this.</dd>
+          </div>
+          <div>
+            <dt>Children per family</dt>
+            <dd>Up to 3. Each child is enrolled separately and has to meet the criteria above on their own.</dd>
+          </div>
+          <div>
+            <dt>One enrollment per child</dt>
+            <dd>A child can be enrolled once, across all 12 sites. No duplicates.</dd>
+          </div>
+          <div>
+            <dt>Already getting diapers elsewhere</dt>
+            <dd>Still eligible. Using another diaper bank does not disqualify a family.</dd>
+          </div>
+        </dl>
       </div>
 
       <h3>The steps <span class="chip">About 5 minutes</span></h3>
@@ -995,7 +1038,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       </details>
       <details class="faq">
         <summary>Do we enroll babies only, or can we enroll toddlers too?</summary>
-        <p>Any child under age 3. Newborns, infants, and toddlers all qualify.</p>
+        <p>Any child under age 3 who is still in diapers. Newborns, infants, and toddlers all qualify. A child who has finished potty training is not eligible, even if they are under 3.</p>
       </details>
       <details class="faq">
         <summary>Is there a cap on how many families we can enroll?</summary>
