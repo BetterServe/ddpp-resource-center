@@ -101,6 +101,22 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .card .go { display: block; margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--med-green); }
 
 /* ---------- Home: enrollment counter ---------- */
+/* ---------- Home: support call to action ----------
+   This page is only ever seen by site staff, so it carries MOD's number
+   alone. What staff hand to families lives in Training & Support. */
+.mod-dd .help {
+  background: var(--green); color: var(--cream);
+  border-radius: 14px; padding: 30px 32px 26px;
+}
+.mod-dd .help h3 {
+  margin: 0 0 9px; font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(26px, 4vw, 34px); line-height: 1.1; color: var(--teal);
+}
+.mod-dd .help p { margin: 0 0 20px; max-width: 56ch; color: var(--cream); font-size: 16px; }
+.mod-dd .help .btn { margin: 5px 10px 5px 0; }
+.mod-dd .help .btn.secondary { background: transparent; color: var(--cream); border-color: var(--cream); }
+.mod-dd .help .btn.secondary:hover { background: var(--cream); color: var(--green); border-color: var(--cream); }
+
 /* ---------- Home: the two status bars ---------- */
 .mod-dd .panels {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(298px, 1fr));
@@ -506,18 +522,11 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 
       </div>
 
-      <h3 class="sectitle">Who to call</h3>
-      <div class="contacts">
-        <div class="who">
-          <h3>For families: the card</h3>
-          <p>Trouble opening the card, or a payment that will not go through at the register. This number is printed on the card, so families may already have it:</p>
-          <p class="detail"><a href="tel:+18882535667">888-253-5667</a></p>
-        </div>
-        <div class="who">
-          <h3>For site staff: the program</h3>
-          <p>Enrollment questions, a lost enrollment link, or anything about how the pilot runs:</p>
-          <p class="detail"><a href="tel:+18446632655">844-663-2655</a><br><a href="mailto:support@modcollective.org">support@modcollective.org</a></p>
-        </div>
+      <div class="help">
+        <h3>Need support?</h3>
+        <p>Enrollment questions, a lost enrollment link, a family situation you are not sure about, or anything else about the pilot. Reach MOD Collective directly.</p>
+        <a class="btn" href="tel:+18446632655">Call 844-663-2655</a>
+        <a class="btn secondary" href="mailto:support@modcollective.org?subject=DDPP%20site%20question">Email us</a>
       </div>
     </div>
 
