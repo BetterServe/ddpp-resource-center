@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Diaper Dollars Card | MOD Collective</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@1,8..60,600&display=swap');
+
+/* ==========================================================================
+   Diaper Dollars — family guide
+   Sent to families after enrollment, before the card arrives.
+
+   Written for a parent on a phone, not for site staff. One column, no tabs,
+   large type. Deliberately carries no eligibility rules and no dollar
+   amounts: everyone reading this is already approved, and naming the tiers
+   invites "why did I get less than her". Where a family would ask how much
+   they get, the page points at their own card.
+
+   English and Spanish are two parallel blocks rather than a string table,
+   so the Spanish can be read and corrected as ordinary prose by someone
+   who does not read code.
+   ========================================================================== */
+
+.mod-dd {
+  --green: #1B3939;
+  --med-green: #1B6B6B;
+  --teal: #64E8E4;
+  --cream: #EBE9E3;
+  --med-gray: #B8B6B1;
+  --dark-gray: #67655F;
+  --red: #CC3633;
+  --white: #FFFFFF;
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --wrap: 680px;
+
+  font-family: var(--sans);
+  color: var(--green);
+  background: var(--cream);
+  line-height: 1.6;
+  font-size: 18px;
+  -webkit-font-smoothing: antialiased;
+}
+html, body { margin: 0; padding: 0; background: #EBE9E3; }
+.mod-dd *, .mod-dd *::before, .mod-dd *::after { box-sizing: border-box; }
+.mod-dd img { max-width: 100%; height: auto; display: block; }
+.mod-dd a { color: inherit; }
+.mod-dd :focus-visible { outline: 3px solid var(--med-green); outline-offset: 2px; border-radius: 3px; }
+.mod-dd [hidden] { display: none !important; }
+
+/* ---------- Header and language toggle ---------- */
+.mod-dd .top { background: var(--green); }
+.mod-dd .top .inner {
+  max-width: var(--wrap); margin: 0 auto; padding: 18px 20px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.mod-dd .top img { width: 112px; }
+.mod-dd .langbar { display: flex; gap: 6px; }
+.mod-dd .langbar button {
+  font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+  background: transparent; color: var(--cream); border: 1px solid rgba(235,233,227,.4);
+  padding: 8px 16px; border-radius: 999px; transition: background .15s, color .15s;
+}
+.mod-dd .langbar button:hover { background: rgba(100,232,228,.16); }
+.mod-dd .langbar button.active {
+  background: var(--teal); color: var(--green); border-color: var(--teal); font-weight: 700;
+}
+
+.mod-dd .wrap { max-width: var(--wrap); margin: 0 auto; padding: 38px 20px 56px; }
+
+/* ---------- Type ---------- */
+.mod-dd h1 {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(32px, 7vw, 44px); line-height: 1.12; margin: 0 0 14px;
+}
+.mod-dd .lede { font-size: 20px; color: #3C5555; margin: 0 0 4px; }
+.mod-dd h2 { font-size: 23px; font-weight: 800; line-height: 1.25; margin: 0 0 12px; letter-spacing: -.01em; }
+.mod-dd p { margin: 0 0 15px; }
+.mod-dd .sec { padding: 30px 0; border-bottom: 1px solid var(--med-gray); }
+.mod-dd .sec:last-of-type { border-bottom: none; }
+.mod-dd .sec p:last-child { margin-bottom: 0; }
+.mod-dd .tag {
+  display: inline-block; background: var(--teal); color: var(--green);
+  font-size: 12px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase;
+  padding: 5px 13px; border-radius: 999px; margin-bottom: 13px;
+}
+
+/* ---------- Steps ---------- */
+.mod-dd ol.steps { counter-reset: st; list-style: none; padding: 0; margin: 18px 0 0; }
+.mod-dd ol.steps li {
+  counter-increment: st; position: relative; padding: 15px 0 15px 54px;
+  border-top: 1px solid var(--med-gray); font-size: 17px;
+}
+.mod-dd ol.steps li::before {
+  content: counter(st); position: absolute; left: 0; top: 14px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--med-green); color: var(--cream);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 700;
+}
+
+/* ---------- Highlight boxes ---------- */
+.mod-dd .warn, .mod-dd .note {
+  background: var(--white); border: 1px solid var(--med-gray);
+  border-radius: 12px; padding: 20px 22px; margin: 20px 0 0;
+}
+.mod-dd .warn { border-left: 6px solid var(--red); }
+.mod-dd .note { border-left: 6px solid var(--teal); }
+.mod-dd .warn strong { color: var(--red); }
+.mod-dd .warn p:last-child, .mod-dd .note p:last-child { margin-bottom: 0; }
+
+/* ---------- Covered / not covered ---------- */
+.mod-dd .buy { display: grid; grid-template-columns: repeat(auto-fit, minmax(238px, 1fr)); gap: 14px; margin: 20px 0 0; }
+.mod-dd .buy > div { background: var(--white); border: 1px solid var(--med-gray); border-radius: 12px; padding: 20px 22px; }
+.mod-dd .buy h3 { margin: 0 0 12px; font-size: 14px; text-transform: uppercase; letter-spacing: .05em; }
+.mod-dd .buy .ok h3 { color: var(--med-green); }
+.mod-dd .buy .no h3 { color: var(--red); }
+.mod-dd .buy ul { list-style: none; padding: 0; margin: 0; }
+.mod-dd .buy li { position: relative; padding: 0 0 10px 30px; font-size: 17px; line-height: 1.45; }
+.mod-dd .buy li:last-child { padding-bottom: 0; }
+.mod-dd .buy li::before { position: absolute; left: 0; top: -1px; font-weight: 700; font-size: 18px; }
+.mod-dd .buy .ok li::before { content: "✓"; color: var(--med-green); }
+.mod-dd .buy .no li::before { content: "✕"; color: var(--red); }
+
+/* ---------- Stores ---------- */
+.mod-dd .stores {
+  list-style: none; padding: 0; margin: 20px 0 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+}
+.mod-dd .stores li {
+  background: var(--white); border: 1px solid var(--med-gray); border-radius: 8px;
+  padding: 14px 12px; text-align: center; font-size: 15px; font-weight: 700; color: var(--green);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.mod-dd .stores .on {
+  font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--med-green); background: rgba(100,232,228,.3); padding: 2px 8px; border-radius: 999px;
+}
+
+/* ---------- Screenshots ---------- */
+.mod-dd figure { margin: 22px 0 0; }
+.mod-dd figure img {
+  border: 1px solid var(--med-gray); border-radius: 12px; background: var(--white);
+  max-width: min(100%, 340px);
+}
+.mod-dd figcaption { font-size: 14px; color: var(--dark-gray); margin-top: 9px; }
+
+/* ---------- Help ---------- */
+.mod-dd .help { background: var(--green); color: var(--cream); border-radius: 14px; padding: 30px 28px 26px; margin-top: 30px; }
+.mod-dd .help h2 {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(27px, 5vw, 34px); color: var(--teal); margin: 0 0 10px;
+}
+.mod-dd .help p { margin: 0 0 20px; font-size: 17px; }
+.mod-dd .btn {
+  display: inline-block; background: var(--red); color: var(--white);
+  padding: 15px 30px; border-radius: 999px; text-decoration: none;
+  font-weight: 700; font-size: 17px; border: 2px solid var(--red); margin: 4px 0;
+}
+.mod-dd .btn:hover { background: #A82B28; border-color: #A82B28; }
+
+/* ---------- Footer ---------- */
+.mod-dd .foot { background: var(--green); color: var(--cream); }
+.mod-dd .foot .inner { max-width: var(--wrap); margin: 0 auto; padding: 30px 20px; }
+.mod-dd .foot img { width: 110px; opacity: .95; margin-bottom: 16px; }
+.mod-dd .foot p { font-size: 13px; color: var(--med-gray); margin: 0; }
+
+@media (prefers-reduced-motion: reduce) { .mod-dd * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="mod-dd">
+
+  <div class="top">
+    <div class="inner">
+      <img src="https://modcollective.org/wp-content/uploads/2024/04/MOD-Diaper-Dollars-Logo-White.png" alt="Diaper Dollars by MOD">
+      <div class="langbar">
+        <button type="button" id="lang-en" class="active" onclick="ddLang('en')">English</button>
+        <button type="button" id="lang-es" lang="es" onclick="ddLang('es')">Espa&ntilde;ol</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ==================== ENGLISH ==================== -->
+    <div id="content-en" lang="en">
+
+      <h1>Your Diaper Dollars card is on the way.</h1>
+      <p class="lede">Here is how it works and how to use it.</p>
+
+      <div class="sec">
+        <span class="tag">First</span>
+        <h2>Watch for two text messages</h2>
+        <p>The first text has a verification link. <strong>Tap it.</strong> Your card is not sent until you do, so this is the step to do right away.</p>
+        <p>The second text brings your card, usually within one business day.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Your card</span>
+        <h2>It opens on your phone</h2>
+        <p>There is no app to download. Your card opens in your phone's browser, and it works on a tablet or computer too.</p>
+        <p>It is the same link for the whole program, so <strong>save the text message</strong>. You will use it every time you shop.</p>
+        <p>Your balance is shown on your card, along with the date you need to use it by.</p>
+        <figure>
+          <img src="img/card-home.png" width="432" height="793" loading="lazy" alt="The Diaper Dollars card page, showing the card, a button for the list of stores, and the current balance below">
+          <figcaption>Your card page. The number on the card is partly hidden in this example.</figcaption>
+        </figure>
+        <div class="note">
+          <p><strong>Your card speaks 14 languages.</strong> Tap the language button in the top right corner of your card and everything changes to the language you pick.</p>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">In a store</span>
+        <h2>How to pay at the register</h2>
+        <ol class="steps">
+          <li>Open your card link.</li>
+          <li>Tap <strong>Click here for a list of stores</strong> and pick the store you are in.</li>
+          <li>Tap <strong>Pay with Barcode</strong>.</li>
+          <li>Scan your items and press Total or Pay. At a register with a cashier, choose Credit/Debit.</li>
+          <li>Have the barcode on your phone scanned with the hand scanner.</li>
+        </ol>
+        <div class="warn">
+          <p><strong>Scan the barcode before you pay any other way.</strong> If you swipe a card or hand over cash first, the diaper benefit will not come off your total. This is the most common reason a payment does not work.</p>
+        </div>
+        <figure>
+          <img src="img/pay-barcode.png" width="556" height="883" loading="lazy" alt="The Pay with Barcode screen, showing checkout steps above a barcode to be scanned">
+          <figcaption>Instructions change depending on the store you pick, so check the screen each time.</figcaption>
+        </figure>
+        <p>Prefer not to use your phone at the register? Pick your store, then use the print button to print a paper version to carry. You need one for each store you shop at.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Online</span>
+        <h2>How to shop online</h2>
+        <p>Three stores take the card for online orders: <strong>Food 4 Less</strong>, <strong>Jewel</strong> and <strong>Walmart</strong>.</p>
+        <ol class="steps">
+          <li>In the list of stores, pick the online version, like Walmart.com instead of Walmart.</li>
+          <li>Shop on that store's website the way you normally would.</li>
+          <li>At checkout, type the card number from the top of your card into the debit or credit card box.</li>
+        </ol>
+        <p>There is no code to enter and nothing to redeem. It works like any other card.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">What it buys</span>
+        <h2>Diapers only</h2>
+        <div class="buy">
+          <div class="ok">
+            <h3>You can buy</h3>
+            <ul>
+              <li>Disposable diapers for children</li>
+              <li>Any size</li>
+              <li>Name brands and store brands</li>
+            </ul>
+          </div>
+          <div class="no">
+            <h3>You cannot buy</h3>
+            <ul>
+              <li>Baby wipes</li>
+              <li>Diaper creams and ointments</li>
+              <li>Adult incontinence products</li>
+              <li>Anything else in the baby aisle</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:18px">If you bring diapers and wipes to the register together, the card pays for the diapers. You pay for the rest another way.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Not sure?</span>
+        <h2>Check a product before you buy it</h2>
+        <p>Your card has a <strong>Check a Product</strong> button. It opens your phone camera so you can scan the barcode on the shelf and see right away whether it is covered.</p>
+        <p>It is quicker than finding out at the register.</p>
+        <figure>
+          <img src="img/check-product.png" width="272" height="225" loading="lazy" alt="The Check a Product button, which says to scan a barcode with your phone camera to make sure the offer applies">
+        </figure>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Every 31 days</span>
+        <h2>Your balance renews, and the old one goes away</h2>
+        <p>Your card shows a <strong>Valid thru</strong> date. That is the last day to use the balance you have now.</p>
+        <div class="warn">
+          <p><strong>Unused money does not carry over.</strong> Whatever is left on that date is removed, and a new balance takes its place. Saving up over several months does not work, and nothing warns you before it happens.</p>
+        </div>
+        <p>A new balance arrives every 31 days for as long as you are in the program.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Where to shop</span>
+        <h2>Stores that take your card in Illinois</h2>
+        <ul class="stores">
+          <li>Cub</li>
+          <li>CVS</li>
+          <li>Dollar General</li>
+          <li>Family Dollar</li>
+          <li>Food 4 Less<span class="on">Online too</span></li>
+          <li>Jewel<span class="on">Online too</span></li>
+          <li>Kroger</li>
+          <li>Mariano&rsquo;s</li>
+          <li>Meijer</li>
+          <li>Ruler</li>
+          <li>Walgreens</li>
+          <li>Walmart<span class="on">Online too</span></li>
+        </ul>
+      </div>
+
+      <div class="help">
+        <h2>Need help?</h2>
+        <p>Call if you cannot open your card, or if a payment will not go through at the register. This number is also printed on your card.</p>
+        <a class="btn" href="tel:+18882535667">Call 888-253-5667</a>
+        <p style="margin:18px 0 0">Your card also has a help section with phone, email and chat support, plus answers to common questions.</p>
+      </div>
+
+    </div>
+
+    <!-- ==================== ESPAÑOL ==================== -->
+    <div id="content-es" lang="es" hidden>
+
+      <h1>Su tarjeta Diaper Dollars viene en camino.</h1>
+      <p class="lede">As&iacute; funciona y as&iacute; se usa.</p>
+
+      <div class="sec">
+        <span class="tag">Primero</span>
+        <h2>Espere dos mensajes de texto</h2>
+        <p>El primer mensaje tiene un enlace de verificaci&oacute;n. <strong>T&oacute;quelo.</strong> Su tarjeta no se env&iacute;a hasta que lo haga, as&iacute; que h&aacute;galo de inmediato.</p>
+        <p>El segundo mensaje trae su tarjeta, normalmente dentro de un d&iacute;a h&aacute;bil.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Su tarjeta</span>
+        <h2>Se abre en su tel&eacute;fono</h2>
+        <p>No hay aplicaci&oacute;n que descargar. Su tarjeta se abre en el navegador de su tel&eacute;fono, y tambi&eacute;n funciona en una tableta o computadora.</p>
+        <p>Es el mismo enlace durante todo el programa, as&iacute; que <strong>guarde el mensaje de texto</strong>. Lo usar&aacute; cada vez que compre.</p>
+        <p>Su saldo aparece en su tarjeta, junto con la fecha l&iacute;mite para usarlo.</p>
+        <figure>
+          <img src="img/card-home.png" width="432" height="793" loading="lazy" alt="La p&aacute;gina de la tarjeta Diaper Dollars, con la tarjeta, un bot&oacute;n para la lista de tiendas y el saldo actual">
+          <figcaption>Su p&aacute;gina de tarjeta. Las im&aacute;genes de esta gu&iacute;a est&aacute;n en ingl&eacute;s, pero su tarjeta puede cambiarse a espa&ntilde;ol.</figcaption>
+        </figure>
+        <div class="note">
+          <p><strong>Su tarjeta est&aacute; en 14 idiomas.</strong> Toque el bot&oacute;n de idioma en la esquina superior derecha de su tarjeta y todo cambia al idioma que elija.</p>
+        </div>
+      </div>
+
+      <div class="sec">
+        <span class="tag">En la tienda</span>
+        <h2>C&oacute;mo pagar en la caja</h2>
+        <ol class="steps">
+          <li>Abra el enlace de su tarjeta.</li>
+          <li>Toque <strong>Click here for a list of stores</strong> y elija la tienda donde est&aacute;.</li>
+          <li>Toque <strong>Pay with Barcode</strong>.</li>
+          <li>Escanee sus productos y presione Total o Pay. En una caja con cajero, elija Credit/Debit.</li>
+          <li>Pida que escaneen el c&oacute;digo de barras de su tel&eacute;fono con el esc&aacute;ner de mano.</li>
+        </ol>
+        <div class="warn">
+          <p><strong>Escanee el c&oacute;digo de barras antes de pagar de cualquier otra forma.</strong> Si pasa otra tarjeta o entrega efectivo primero, el beneficio de pa&ntilde;ales no se descontar&aacute; de su total. Esta es la raz&oacute;n m&aacute;s com&uacute;n por la que un pago no funciona.</p>
+        </div>
+        <figure>
+          <img src="img/pay-barcode.png" width="556" height="883" loading="lazy" alt="La pantalla Pay with Barcode, con los pasos de pago arriba de un c&oacute;digo de barras">
+          <figcaption>Las instrucciones cambian seg&uacute;n la tienda que elija. Revise la pantalla cada vez.</figcaption>
+        </figure>
+        <p>&iquest;Prefiere no usar el tel&eacute;fono en la caja? Elija su tienda y use el bot&oacute;n de imprimir para llevar una versi&oacute;n en papel. Necesita una por cada tienda donde compre.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">En l&iacute;nea</span>
+        <h2>C&oacute;mo comprar en l&iacute;nea</h2>
+        <p>Tres tiendas aceptan la tarjeta para pedidos en l&iacute;nea: <strong>Food 4 Less</strong>, <strong>Jewel</strong> y <strong>Walmart</strong>.</p>
+        <ol class="steps">
+          <li>En la lista de tiendas, elija la versi&oacute;n en l&iacute;nea, como Walmart.com en lugar de Walmart.</li>
+          <li>Compre en el sitio web de esa tienda como lo hace normalmente.</li>
+          <li>Al pagar, escriba el n&uacute;mero que aparece en su tarjeta en la casilla de tarjeta de d&eacute;bito o cr&eacute;dito.</li>
+        </ol>
+        <p>No hay c&oacute;digo que ingresar ni nada que canjear. Funciona como cualquier otra tarjeta.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Qu&eacute; puede comprar</span>
+        <h2>Solamente pa&ntilde;ales</h2>
+        <div class="buy">
+          <div class="ok">
+            <h3>S&iacute; puede comprar</h3>
+            <ul>
+              <li>Pa&ntilde;ales desechables para ni&ntilde;os</li>
+              <li>Cualquier talla</li>
+              <li>Marcas conocidas y marcas de la tienda</li>
+            </ul>
+          </div>
+          <div class="no">
+            <h3>No puede comprar</h3>
+            <ul>
+              <li>Toallitas h&uacute;medas</li>
+              <li>Cremas y ung&uuml;entos para pa&ntilde;al</li>
+              <li>Productos de incontinencia para adultos</li>
+              <li>Cualquier otra cosa del pasillo de beb&eacute;s</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:18px">Si lleva pa&ntilde;ales y toallitas juntos a la caja, la tarjeta paga los pa&ntilde;ales. El resto lo paga usted de otra forma.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">&iquest;No est&aacute; seguro?</span>
+        <h2>Revise un producto antes de comprarlo</h2>
+        <p>Su tarjeta tiene un bot&oacute;n que dice <strong>Check a Product</strong>. Abre la c&aacute;mara de su tel&eacute;fono para escanear el c&oacute;digo de barras en el estante y le dice de inmediato si est&aacute; cubierto.</p>
+        <p>Es m&aacute;s r&aacute;pido que enterarse en la caja.</p>
+        <figure>
+          <img src="img/check-product.png" width="272" height="225" loading="lazy" alt="El bot&oacute;n Check a Product, que dice escanear un c&oacute;digo de barras con la c&aacute;mara del tel&eacute;fono">
+        </figure>
+      </div>
+
+      <div class="sec">
+        <span class="tag">Cada 31 d&iacute;as</span>
+        <h2>Su saldo se renueva, y el anterior desaparece</h2>
+        <p>Su tarjeta muestra una fecha que dice <strong>Valid thru</strong>. Ese es el &uacute;ltimo d&iacute;a para usar el saldo que tiene ahora.</p>
+        <div class="warn">
+          <p><strong>El dinero que no use no se acumula.</strong> Lo que quede en esa fecha se elimina y un saldo nuevo toma su lugar. Guardar el saldo durante varios meses no funciona, y no recibir&aacute; ning&uacute;n aviso antes de que ocurra.</p>
+        </div>
+        <p>Un saldo nuevo llega cada 31 d&iacute;as mientras est&eacute; en el programa.</p>
+      </div>
+
+      <div class="sec">
+        <span class="tag">D&oacute;nde comprar</span>
+        <h2>Tiendas que aceptan su tarjeta en Illinois</h2>
+        <ul class="stores">
+          <li>Cub</li>
+          <li>CVS</li>
+          <li>Dollar General</li>
+          <li>Family Dollar</li>
+          <li>Food 4 Less<span class="on">Tambi&eacute;n en l&iacute;nea</span></li>
+          <li>Jewel<span class="on">Tambi&eacute;n en l&iacute;nea</span></li>
+          <li>Kroger</li>
+          <li>Mariano&rsquo;s</li>
+          <li>Meijer</li>
+          <li>Ruler</li>
+          <li>Walgreens</li>
+          <li>Walmart<span class="on">Tambi&eacute;n en l&iacute;nea</span></li>
+        </ul>
+      </div>
+
+      <div class="help">
+        <h2>&iquest;Necesita ayuda?</h2>
+        <p>Llame si no puede abrir su tarjeta o si un pago no funciona en la caja. Este n&uacute;mero tambi&eacute;n aparece impreso en su tarjeta.</p>
+        <a class="btn" href="tel:+18882535667">Llame al 888-253-5667</a>
+        <p style="margin:18px 0 0">Su tarjeta tambi&eacute;n tiene una secci&oacute;n de ayuda con soporte por tel&eacute;fono, correo electr&oacute;nico y chat, adem&aacute;s de respuestas a preguntas comunes.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <div class="inner">
+      <a href="https://modcollective.org/" target="_top" aria-label="MOD Collective">
+        <img src="https://modcollective.org/wp-content/uploads/2024/04/MOD-Diaper-Dollars-Logo-White.png" alt="Diaper Dollars by MOD">
+      </a>
+      <p id="foot-note">The Diaper Distribution Pilot Program is funded by the Illinois Department of Human Services and the Illinois Department of Public Health, and operated by MOD Collective.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Language toggle ---------- */
+var DD_FOOT = {
+  en: 'The Diaper Distribution Pilot Program is funded by the Illinois Department of Human Services and the Illinois Department of Public Health, and operated by MOD Collective.',
+  es: 'El Programa Piloto de Distribución de Pañales está financiado por el Departamento de Servicios Humanos de Illinois y el Departamento de Salud Pública de Illinois, y es operado por MOD Collective.'
+};
+
+function ddLang(l) {
+  if (l !== 'es') l = 'en';
+  document.getElementById('content-en').hidden = (l !== 'en');
+  document.getElementById('content-es').hidden = (l !== 'es');
+  document.getElementById('lang-en').classList.toggle('active', l === 'en');
+  document.getElementById('lang-es').classList.toggle('active', l === 'es');
+  document.getElementById('foot-note').textContent = DD_FOOT[l];
+  document.documentElement.lang = l;
+  try { localStorage.setItem('ddppLang', l); } catch (e) {}
+  ddReportHeight();
+}
+
+/* Remember the choice; otherwise follow the phone's own language. */
+(function () {
+  var saved = null;
+  try { saved = localStorage.getItem('ddppLang'); } catch (e) {}
+  if (!saved) {
+    var nav = (navigator.language || '').toLowerCase();
+    saved = nav.indexOf('es') === 0 ? 'es' : 'en';
+  }
+  ddLang(saved);
+})();
+
+/* ---------- Tell the parent page how tall we are ---------- */
+var ddLastHeight = 0, ddHeightPending = false;
+
+function ddReportHeight() {
+  if (ddHeightPending) return;
+  ddHeightPending = true;
+  requestAnimationFrame(function () {
+    ddHeightPending = false;
+    var h = document.documentElement.scrollHeight;
+    if (Math.abs(h - ddLastHeight) < 2) return;
+    ddLastHeight = h;
+    if (window.parent !== window) {
+      window.parent.postMessage({ ddppHeight: h }, '*');
+    }
+  });
+}
+
+window.addEventListener('load', ddReportHeight);
+window.addEventListener('resize', ddReportHeight);
+if (window.ResizeObserver) { new ResizeObserver(ddReportHeight).observe(document.body); }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!--
+  FAMILY GUIDE embed.
+
+  This is a different page from the staff Resource Center. Paste this into an
+  Elementor HTML widget on the modcollective.org page you send to families
+  after they enroll. Set the section to full width with no padding.
+
+  The staff embed lives in embed-snippet.html. Do not mix them up: the staff
+  page carries eligibility rules and benefit amounts that families should not
+  be handed.
+-->
+
+<iframe
+  id="ddpp-family-frame"
+  src="https://ddpp-resource-center.netlify.app/families"
+  title="Your Diaper Dollars Card"
+  style="width:100%; border:0; display:block; min-height:900px; height:2600px;"
+  loading="lazy"></iframe>
+
+<script>
+(function () {
+  var frame = document.getElementById('ddpp-family-frame');
+  var allowed = 'https://ddpp-resource-center.netlify.app';
+  if (!frame) return;
+
+  window.addEventListener('message', function (e) {
+    // Only trust messages from our own frame, on the expected origin.
+    if (e.origin !== allowed) return;
+    if (e.source !== frame.contentWindow) return;
+    if (!e.data || typeof e.data !== 'object') return;
+
+    if (e.data.ddppHeight) {
+      var h = parseInt(e.data.ddppHeight, 10);
+      // Ignore nonsense values rather than collapsing the page around them.
+      if (!isNaN(h) && h > 200 && h < 20000) {
+        frame.style.height = (h + 20) + 'px';
+      }
+    }
+  });
+})();
+</script>
