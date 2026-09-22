@@ -1,0 +1,34 @@
+<!--
+  Paste this into an Elementor HTML widget on the MOD Collective page.
+  Replace YOUR-SITE-NAME with your actual Netlify subdomain.
+  This is the only thing that ever goes on the MOD site. You will not
+  need to touch it again after this.
+-->
+
+<iframe
+  id="ddpp-frame"
+  src="https://YOUR-SITE-NAME.netlify.app/"
+  title="DDPP Resource Center"
+  style="width:100%; border:0; display:block; height:1400px;"
+  scrolling="no"
+  loading="lazy"></iframe>
+
+<script>
+(function () {
+  var frame = document.getElementById('ddpp-frame');
+  var allowed = 'https://YOUR-SITE-NAME.netlify.app';
+
+  window.addEventListener('message', function (e) {
+    if (e.origin !== allowed) return;
+    if (!e.data) return;
+
+    if (e.data.ddppHeight) {
+      frame.style.height = (parseInt(e.data.ddppHeight, 10) + 20) + 'px';
+    }
+    if (e.data.ddppScrollTop) {
+      var top = frame.getBoundingClientRect().top + window.pageYOffset - 100;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
+})();
+</script>

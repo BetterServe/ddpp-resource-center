@@ -1,0 +1,13 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+# Controls who is allowed to embed this page in an iframe.
+# modcollective.org is listed. Add your own domain to the end of the
+# frame-ancestors line if you want to embed it on a Compago site too.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors 'self' https://modcollective.org https://*.modcollective.org"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

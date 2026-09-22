@@ -1,0 +1,12 @@
+# Netlify
+.netlify/
+
+# Local env — the Jotform key belongs in Netlify's environment variables,
+# never in this repo.
+.env
+.env.*
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini

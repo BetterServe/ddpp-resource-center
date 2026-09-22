@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diaper Distribution Pilot Program Resource Center | MOD Collective</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Source+Serif+4:ital,opsz,wght@1,8..60,600&display=swap');
+
+/* ==========================================================================
+   DDPP Resource Center — iframe build
+   MOD Collective / Diaper Dollars
+
+   This version is meant to be embedded in an iframe on modcollective.org.
+   The site nav bar has been removed, since MOD's real nav sits above the frame.
+   Height is reported to the parent page so the frame resizes itself.
+   ========================================================================== */
+
+.mod-dd {
+  --green: #1B3939;
+  --med-green: #1B6B6B;
+  --teal: #64E8E4;
+  --cream: #EBE9E3;
+  --med-gray: #B8B6B1;
+  --dark-gray: #858380;
+  --yellow: #FFC44D;
+  --red: #CC3633;
+  --coral: #FF7D7D;
+  --white: #FFFFFF;
+
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans: "Figtree", "Helvetica Neue", Arial, sans-serif;
+
+  --wrap: 920px;
+
+  font-family: var(--sans);
+  color: var(--green);
+  background: var(--cream);
+  line-height: 1.6;
+  font-size: 17px;
+  -webkit-font-smoothing: antialiased;
+}
+html, body { margin: 0; padding: 0; background: #EBE9E3; }
+.mod-dd *, .mod-dd *::before, .mod-dd *::after { box-sizing: border-box; }
+.mod-dd img { max-width: 100%; height: auto; display: block; }
+.mod-dd a { color: inherit; }
+.mod-dd :focus-visible { outline: 3px solid var(--med-green); outline-offset: 2px; border-radius: 2px; }
+
+/* ---------- Diaper Dollars bar + section nav ---------- */
+.mod-dd .ddbar { background: var(--green); }
+.mod-dd .ddbar .inner {
+  max-width: var(--wrap); margin: 0 auto; padding: 18px 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+}
+.mod-dd .ddmark { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.mod-dd .ddmark img { width: 104px; }
+.mod-dd .ddmark span {
+  color: var(--teal); font-size: 13px; font-weight: 600;
+  border-left: 1px solid rgba(235,233,227,.28); padding-left: 14px;
+}
+.mod-dd .secnav { display: flex; gap: 6px; flex-wrap: wrap; }
+.mod-dd .secnav a {
+  color: var(--cream); text-decoration: none; cursor: pointer;
+  font-size: 14px; font-weight: 500; padding: 7px 13px; border-radius: 999px;
+  transition: background .15s, color .15s;
+}
+.mod-dd .secnav a:hover { background: rgba(100,232,228,.14); }
+.mod-dd .secnav a.active { background: var(--teal); color: var(--green); font-weight: 700; }
+
+/* ---------- Page shell ---------- */
+.mod-dd .wrap { max-width: var(--wrap); margin: 0 auto; padding: 46px 22px 70px; }
+.mod-dd .page { display: none; }
+.mod-dd .page.active { display: block; }
+
+/* ---------- Type ---------- */
+.mod-dd h2 {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(31px, 4.6vw, 43px); line-height: 1.15; letter-spacing: -.01em;
+  margin: 0 0 14px; max-width: 20ch;
+}
+.mod-dd h3 { font-size: 20px; font-weight: 700; margin: 0 0 8px; letter-spacing: -.005em; }
+.mod-dd h4 { font-size: 16px; font-weight: 700; margin: 20px 0 5px; color: var(--med-green); }
+.mod-dd p { margin: 0 0 14px; max-width: 72ch; }
+.mod-dd .lede { font-size: 19px; color: #3C5555; margin-bottom: 34px; max-width: 62ch; }
+.mod-dd strong { font-weight: 700; }
+
+.mod-dd .squiggle { display: block; width: 260px; max-width: 62%; margin: -4px 0 22px; overflow: visible; }
+.mod-dd .squiggle path { fill: none; stroke: var(--coral); stroke-width: 6; stroke-linecap: round; }
+
+/* ---------- Home: navigation cards ---------- */
+.mod-dd .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; margin-bottom: 36px; }
+.mod-dd .card {
+  background: var(--white); border: 1px solid var(--med-gray); border-radius: 12px;
+  padding: 26px 24px 24px; cursor: pointer; transition: border-color .15s, background .15s;
+  display: flex; flex-direction: column;
+}
+.mod-dd .card:hover { border-color: var(--med-green); background: #FCFCFB; }
+.mod-dd .card h3 { font-size: 19px; margin-bottom: 7px; }
+.mod-dd .card p { margin: 0; font-size: 15px; color: var(--dark-gray); line-height: 1.55; }
+.mod-dd .card .go { margin-top: 16px; font-size: 14px; font-weight: 700; color: var(--med-green); }
+
+/* ---------- Home: enrollment counter ---------- */
+.mod-dd .tally { background: var(--green); border-radius: 14px; padding: 30px 30px 26px; color: var(--cream); margin-bottom: 20px; }
+.mod-dd .tally .num {
+  font-family: var(--serif); font-style: italic; font-weight: 600;
+  font-size: clamp(42px, 7vw, 64px); line-height: 1; color: var(--teal); display: block;
+}
+.mod-dd .tally .of { font-size: 16px; color: var(--cream); margin: 8px 0 0; max-width: none; }
+.mod-dd .tally .asof { font-size: 13px; color: var(--med-gray); margin: 14px 0 0; max-width: none; }
+.mod-dd .bar { height: 10px; background: rgba(235,233,227,.18); border-radius: 999px; margin-top: 18px; overflow: hidden; }
+.mod-dd .bar div { height: 100%; width: 0%; background: var(--teal); border-radius: 999px; transition: width .6s ease; }
+.mod-dd .whatsnew {
+  background: var(--white); border: 1px solid var(--med-gray); border-left: 5px solid var(--yellow);
+  border-radius: 10px; padding: 16px 20px; font-size: 15px; color: #3C5555; margin: 0; max-width: none;
+}
+
+/* ---------- Shared blocks ---------- */
+.mod-dd .back {
+  display: inline-flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 600;
+  color: var(--med-green); cursor: pointer; margin-bottom: 20px; text-decoration: none;
+}
+.mod-dd .back:hover { color: var(--red); }
+
+.mod-dd .callout {
+  background: var(--white); border: 1px solid var(--med-gray); border-left: 5px solid var(--teal);
+  border-radius: 10px; padding: 18px 22px; margin: 0 0 32px;
+}
+.mod-dd .callout p { margin: 0; }
+
+.mod-dd .subsection { padding: 26px 0; border-bottom: 1px solid var(--med-gray); }
+.mod-dd .subsection:first-of-type { padding-top: 6px; }
+.mod-dd .subsection:last-of-type { border-bottom: none; }
+.mod-dd .subsection p:last-child { margin-bottom: 0; }
+
+.mod-dd .steps { counter-reset: step; list-style: none; padding: 0; margin: 0 0 28px; }
+.mod-dd .steps li {
+  counter-increment: step; position: relative; padding: 15px 0 15px 52px;
+  border-bottom: 1px solid var(--med-gray); max-width: 72ch;
+}
+.mod-dd .steps li:last-child { border-bottom: none; }
+.mod-dd .steps li::before {
+  content: counter(step); position: absolute; left: 0; top: 14px;
+  width: 32px; height: 32px; border-radius: 50%; background: var(--med-green); color: var(--cream);
+  display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700;
+}
+
+.mod-dd .btn {
+  display: inline-block; background: var(--red); color: var(--white);
+  padding: 13px 28px; border-radius: 999px; text-decoration: none;
+  font-weight: 700; font-size: 15px; cursor: pointer; margin: 4px 10px 4px 0;
+  border: 2px solid var(--red); transition: background .15s, color .15s;
+}
+.mod-dd .btn:hover { background: #A82B28; border-color: #A82B28; }
+.mod-dd .btn.secondary { background: transparent; color: var(--green); border-color: var(--green); }
+.mod-dd .btn.secondary:hover { background: var(--green); color: var(--cream); }
+
+/* ---------- Support page ---------- */
+.mod-dd .contacts { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; margin: 4px 0 40px; }
+.mod-dd .contacts .who {
+  background: var(--white); border: 1px solid var(--med-gray); border-radius: 12px; padding: 24px;
+}
+.mod-dd .contacts .who h3 { font-size: 17px; }
+.mod-dd .contacts .who p { font-size: 15px; color: var(--dark-gray); }
+.mod-dd .contacts .who .detail { color: var(--green); font-weight: 700; font-size: 16px; line-height: 1.7; margin-bottom: 0; }
+
+.mod-dd .sectitle { font-size: 22px; font-weight: 700; margin: 42px 0 16px; }
+.mod-dd .sectitle:first-of-type { margin-top: 0; }
+
+.mod-dd .video {
+  display: flex; gap: 18px; align-items: center; padding: 14px 18px; margin-bottom: 10px;
+  background: var(--white); border: 1px solid var(--med-gray); border-radius: 10px;
+}
+.mod-dd .video .thumb {
+  width: 86px; height: 54px; flex-shrink: 0; border-radius: 6px; background: var(--green);
+  display: flex; align-items: center; justify-content: center;
+}
+.mod-dd .video .thumb svg { width: 20px; height: 20px; fill: var(--teal); }
+.mod-dd .video .meta strong { display: block; font-size: 16px; }
+.mod-dd .video .meta span { font-size: 14px; color: var(--dark-gray); }
+
+.mod-dd .faq { border-top: 1px solid var(--med-gray); margin-bottom: 8px; }
+.mod-dd .faq:last-of-type { border-bottom: 1px solid var(--med-gray); }
+.mod-dd .faq summary {
+  cursor: pointer; font-weight: 600; font-size: 17px; padding: 16px 34px 16px 0;
+  position: relative; list-style: none;
+}
+.mod-dd .faq summary::-webkit-details-marker { display: none; }
+.mod-dd .faq summary::after {
+  content: ""; position: absolute; right: 6px; top: 24px;
+  width: 9px; height: 9px; border-right: 2px solid var(--med-green); border-bottom: 2px solid var(--med-green);
+  transform: rotate(45deg); transition: transform .18s;
+}
+.mod-dd .faq[open] summary::after { transform: rotate(-135deg); }
+.mod-dd .faq p { padding: 0 0 18px; margin: 0; color: #3C5555; font-size: 16px; }
+
+.mod-dd ul.plain { padding-left: 20px; margin: 0 0 14px; }
+.mod-dd ul.plain li { margin-bottom: 7px; }
+
+/* ---------- Footer ---------- */
+.mod-dd .foot { background: var(--green); color: var(--cream); }
+.mod-dd .foot .inner {
+  max-width: var(--wrap); margin: 0 auto; padding: 34px 22px;
+  display: flex; align-items: center; justify-content: space-between; gap: 22px; flex-wrap: wrap;
+}
+.mod-dd .foot img { width: 120px; opacity: .95; }
+.mod-dd .foot .links { display: flex; gap: 24px; flex-wrap: wrap; }
+.mod-dd .foot a { color: var(--cream); text-decoration: none; font-size: 14px; font-weight: 500; }
+.mod-dd .foot a:hover { color: var(--teal); }
+.mod-dd .foot .fine { width: 100%; font-size: 13px; color: var(--med-gray); margin: 0; }
+
+@media (max-width: 720px) {
+  .mod-dd .ddbar .inner { padding: 14px 18px; gap: 14px; }
+  .mod-dd .secnav { width: 100%; gap: 4px; }
+  .mod-dd .secnav a { padding: 6px 11px; font-size: 13px; }
+  .mod-dd .wrap { padding: 32px 18px 52px; }
+  .mod-dd .tally { padding: 24px 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mod-dd * { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="mod-dd">
+
+  <!-- ============ DIAPER DOLLARS BAR + SECTION NAV ============ -->
+  <div class="ddbar">
+    <div class="inner">
+      <div class="ddmark">
+        <img src="https://modcollective.org/wp-content/uploads/2024/04/MOD-Diaper-Dollars-Logo-White.png" alt="Diaper Dollars by MOD">
+        <span>Illinois DDPP Resource Center</span>
+      </div>
+      <nav class="secnav" aria-label="Resource center">
+        <a onclick="ddGo('home')" class="active" id="nav-home" tabindex="0" role="link">Home</a>
+        <a onclick="ddGo('enroll')" id="nav-enroll" tabindex="0" role="link">Enroll a Family</a>
+        <a onclick="ddGo('program')" id="nav-program" tabindex="0" role="link">How It Works</a>
+        <a onclick="ddGo('about')" id="nav-about" tabindex="0" role="link">About the DDPP</a>
+        <a onclick="ddGo('support')" id="nav-support" tabindex="0" role="link">Training &amp; Support</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ========== HOME ========== -->
+    <div class="page active" id="home">
+      <h2>Everything your team needs, in one place.</h2>
+      <svg class="squiggle" viewBox="0 0 260 14" aria-hidden="true">
+        <path d="M3 9.5C34 4 52 11.5 84 6.5c32-5 48 6 80 1.5 30-4.2 58 3.5 93-2.5"/>
+      </svg>
+      <p class="lede">This page is for staff at participating sites for the FY27 Diaper Distribution Pilot Program. Enrollment steps, family questions, training, and support all live here.</p>
+
+      <div class="cards">
+        <div class="card" onclick="ddGo('enroll')">
+          <h3>Enroll a Family</h3>
+          <p>The step by step workflow, and what to tell families about what happens next.</p>
+          <div class="go">Start here</div>
+        </div>
+        <div class="card" onclick="ddGo('program')">
+          <h3>How It Works</h3>
+          <p>The benefit, where the card works, eligibility, timeline, and what you are not responsible for.</p>
+          <div class="go">Look it up</div>
+        </div>
+        <div class="card" onclick="ddGo('about')">
+          <h3>About the DDPP</h3>
+          <p>What the program is, why it exists, and what this pilot year is designed to learn.</p>
+          <div class="go">Read the background</div>
+        </div>
+        <div class="card" onclick="ddGo('support')">
+          <h3>Training &amp; Support</h3>
+          <p>Training videos, FAQ, contact information, and monthly call recordings.</p>
+          <div class="go">Get help</div>
+        </div>
+      </div>
+
+      <div class="tally">
+        <span class="num" id="dd-count">0</span>
+        <p class="of"><span id="dd-label">applications submitted</span> of 5,500 across all 12 sites</p>
+        <div class="bar"><div id="dd-bar" style="width:0%"></div></div>
+        <p class="asof" id="dd-asof"></p>
+      </div>
+
+      <p class="whatsnew"><strong>Latest update.</strong> Enrollment opens October 1. Training modules go out September 25. The intro call recording is posted under Training &amp; Support.</p>
+    </div>
+
+    <!-- ========== ENROLL ========== -->
+    <div class="page" id="enroll">
+      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <h2>Enroll a family.</h2>
+      <p class="lede">Five minutes at the visit. Nothing after that.</p>
+
+      <div class="callout">
+        <p><strong>Who is eligible.</strong> Any child under age 3 in a family that meets WIC income guidelines (185% FPL). One enrollment per child. Families already using another diaper bank are still eligible.</p>
+      </div>
+
+      <h3>The steps</h3>
+      <ol class="steps">
+        <li>Open your site's enrollment link on your tablet or computer.</li>
+        <li>Hand it to the family or walk them through it. The form takes about 5 minutes and includes 3 short evaluation questions.</li>
+        <li>The family completes the form and agrees to the terms and conditions. If you are assisting, check the staff attestation box.</li>
+        <li>The family submits. They get a text with a verification link right away.</li>
+        <li>Done. Nothing else is needed from you.</li>
+      </ol>
+
+      <a class="btn secondary" onclick="ddGo('support')" tabindex="0" role="link">Having trouble?</a>
+
+      <div class="subsection">
+        <h3>What to tell the family about what happens next</h3>
+        <p>They will get a text with a verification link right away, and they need to click it. Within one business day of clicking, their eCard arrives by text. Their 6 month benefit starts when the card is issued. Everything after that, including retailer instructions and the support contact, is texted to them.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Why the evaluation questions are on the form</h3>
+        <p>Families may ask why the form has extra questions. Here is what to tell them, depending on your site type. Individual responses are never shared with your site.</p>
+
+        <h4>WIC clinics</h4>
+        <p>The form asks whether the family has ever gotten free diapers from a local organization, what made it hard if they have, and whether a lack of diapers has caused them to miss work, skip changes, or cut back on other essentials. These help the state document what diaper access looks like in counties with no diaper bank.</p>
+
+        <h4>Home visiting programs</h4>
+        <p>The form asks whether the family had connected to WIC, Medicaid, SNAP, or childcare assistance before this visit, whether they had a plan for getting diapers, and how concerned they are about affording diapers in the coming months. These help the state understand whether home visiting is an effective way to connect families to this benefit.</p>
+      </div>
+    </div>
+
+    <!-- ========== PROGRAM ========== -->
+    <div class="page" id="program">
+      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <h2>How the program works.</h2>
+      <p class="lede">Reference information for answering family questions. Each section is short. If you need more, check the FAQ.</p>
+
+      <div class="subsection">
+        <h3>The benefit</h3>
+        <p>$40 per month per child, loaded onto a digital eCard. Up to 3 children per household, so $120 per month at most. It lasts 6 months from the date the eCard is issued, with no renewal. This is a limited pilot for State Fiscal Year 2027 and services beyond this year are not guaranteed.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Where the card works</h3>
+        <p>Walmart, Albertsons (Jewel-Osco), Kroger stores (Food 4 Less, Mariano's), Walgreens, CVS, Dollar General, Family Dollar, and more. The card runs on the OTC network, which these retailers already accept. Families can use it at the register, at self checkout, or online depending on the store. Retailer specific instructions are texted to families with their card.</p>
+        <a class="btn secondary" href="#">Full retailer list</a>
+      </div>
+
+      <div class="subsection">
+        <h3>Eligibility</h3>
+        <p>Child under age 3. Family meets WIC income guidelines (185% FPL). If they are eligible for WIC, they qualify. Home visiting sites can also use Medicaid eligibility. One enrollment per child, no duplicates across sites. Families already receiving diapers from another program are still eligible.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Timeline</h3>
+        <p>Enrollment runs October 1 through December 23, 2026. That is when your staff's involvement happens. After December 23, families keep receiving their benefit through the end of their 6 month window, which runs into June 2027 for December enrollees. Your staff are not involved after enrollment closes.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What you are not responsible for</h3>
+        <p>No physical diapers. No warehouse, no pallets, no volunteers. No income verification beyond what you already do for WIC. No managing the eCard or fielding benefit questions. Once a family is enrolled, the Diaper Dollars support team handles everything. Families get the support number and email with their card.</p>
+      </div>
+    </div>
+
+    <!-- ========== ABOUT ========== -->
+    <div class="page" id="about">
+      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <h2>About the Diaper Distribution Pilot Program.</h2>
+      <p class="lede">A state funded test of whether Illinois can put a monthly diaper benefit in families' hands through the systems they already use.</p>
+
+      <div class="subsection">
+        <h3>What it is</h3>
+        <p>The Diaper Distribution Pilot Program was created by the Illinois General Assembly to test whether Illinois can provide a monthly diaper benefit to families with young children. It is funded through the Illinois Department of Human Services and the Illinois Department of Public Health, and operated by MOD Collective through the Diaper Dollars platform.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>Why it exists</h3>
+        <p>No federal program covers diapers. SNAP, WIC, TANF, and Medicaid all exclude them. A month's supply costs $70 to $100 per child, and one in two families with young children cannot consistently afford the diapers they need. When families run short, children stay in wet diapers longer, parents miss work because childcare requires a daily diaper supply, and families cut back on food or medicine to cover the gap.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>How it works</h3>
+        <p>Instead of distributing physical diapers, the program loads a monthly benefit onto a digital eCard that families use at retailers they already shop at. That means no warehouses, no volunteer coordination, and no transportation logistics. Families choose their own brand and size. The model was built to work through existing enrollment channels like WIC clinics and home visiting programs, so the state does not have to build new infrastructure.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What previous years have shown</h3>
+        <p>The program has operated across multiple regions in Illinois. Over 92% of enrolled families report reducing or eliminating their need for emergency diaper sources after enrolling. The eCard model has launched at new sites quickly and with minimal disruption to existing workflows.</p>
+      </div>
+
+      <div class="subsection">
+        <h3>What this year is testing</h3>
+        <p>FY27 is focused on two questions. First, can the program serve as the primary diaper resource in counties that have no diaper bank or organized diaper assistance at all? Every WIC site in this year's program is in a county identified as having zero existing diaper distribution. Second, is a WIC clinic the best way to reach families, or can home visiting programs enroll families just as effectively? Two home visiting programs are participating alongside the WIC sites so the state can compare enrollment, utilization, and reach across both models.</p>
+        <p>The answers will inform whether and how the program expands in future years.</p>
+      </div>
+    </div>
+
+    <!-- ========== SUPPORT ========== -->
+    <div class="page" id="support">
+      <a class="back" onclick="ddGo('home')" tabindex="0" role="link">&larr; Resource Center home</a>
+      <h2>Training and support.</h2>
+      <p class="lede">Who to call, what to watch, and answers to what sites ask most.</p>
+
+      <div class="contacts">
+        <div class="who">
+          <h3>For families</h3>
+          <p>If a family calls your clinic with an eCard question, give them this:</p>
+          <p class="detail">[Support phone]<br>[Support email]</p>
+        </div>
+        <div class="who">
+          <h3>For site staff</h3>
+          <p>Questions about the program, enrollment, or anything else:</p>
+          <p class="detail">Brendan Kitt<br>[email]<br>[phone]</p>
+        </div>
+      </div>
+
+      <h3 class="sectitle">Training videos</h3>
+      <div class="video">
+        <div class="thumb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="meta"><strong>Program overview</strong><span>What Diaper Dollars is and how it works. About 8 minutes.</span></div>
+      </div>
+      <div class="video">
+        <div class="thumb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="meta"><strong>Enrolling a family</strong><span>Walkthrough of the enrollment form, step by step. About 10 minutes.</span></div>
+      </div>
+      <div class="video">
+        <div class="thumb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="meta"><strong>Answering family questions</strong><span>The most common questions families ask, and how to answer them. About 6 minutes.</span></div>
+      </div>
+      <div class="video">
+        <div class="thumb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></div>
+        <div class="meta"><strong>Intro call recording, September 24</strong><span>Full recording of the kickoff Q and A session. About 45 minutes.</span></div>
+      </div>
+
+      <h3 class="sectitle">Frequently asked questions</h3>
+
+      <details class="faq">
+        <summary>Do we enroll babies only, or can we enroll toddlers too?</summary>
+        <p>Any child under age 3. Newborns, infants, and toddlers all qualify.</p>
+      </details>
+      <details class="faq">
+        <summary>Is there a cap on how many families we can enroll?</summary>
+        <p>No per site cap. The 5,500 target is shared across all 12 sites, first come first served. Enroll every eligible family you see.</p>
+      </details>
+      <details class="faq">
+        <summary>What if a family already gets diapers from another program?</summary>
+        <p>They are still eligible. The only restriction is no duplicate enrollments for the same child across sites.</p>
+      </details>
+      <details class="faq">
+        <summary>Do we need a Release of Information form?</summary>
+        <p>No. The family consents to share their information directly on the enrollment form. Nothing separate is needed from your office.</p>
+      </details>
+      <details class="faq">
+        <summary>Are there printed materials?</summary>
+        <p>No. Everything is texted to families.</p>
+      </details>
+      <details class="faq">
+        <summary>What if a family does not get their verification text?</summary>
+        <p>Have them check the phone number they entered. If it is correct and they still have not received it within a few minutes, direct them to the support contact above.</p>
+      </details>
+      <details class="faq">
+        <summary>How long does the enrollment form take?</summary>
+        <p>About 5 minutes, including the evaluation questions.</p>
+      </details>
+
+      <h3 class="sectitle">Monthly check in calls</h3>
+      <p>Short calls starting in October to flag issues and hear how enrollment is going across sites. The schedule and recordings are posted here.</p>
+      <ul class="plain">
+        <li>October call: [date TBD]</li>
+        <li>November call: [date TBD]</li>
+        <li>December call: [date TBD]</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div class="foot">
+    <div class="inner">
+      <a href="https://modcollective.org/" target="_top" aria-label="MOD Collective home">
+        <img src="https://modcollective.org/wp-content/uploads/2024/04/MOD-Diaper-Dollars-Logo-White.png" alt="Diaper Dollars by MOD">
+      </a>
+      <div class="links">
+        <a href="https://modcollective.org/" target="_top">modcollective.org</a>
+        <a href="https://modcollective.org/for-families/" target="_top">For Families</a>
+        <a href="https://modcollective.org/stay-connected/" target="_top">Contact</a>
+        <a href="https://modcollective.org/privacy-policy/" target="_top">Privacy Policy</a>
+      </div>
+      <p class="fine">The Diaper Distribution Pilot Program is funded by the Illinois Department of Human Services and the Illinois Department of Public Health, and operated by MOD Collective.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ---------- Settings you may want to change ---------- */
+var DD_ENDPOINT = '/api/count';   // the Netlify function
+var DD_GOAL     = 5500;           // program target
+var DD_LABEL    = 'applications submitted';  // see note in the README about wording
+
+/* ---------- Section switching ---------- */
+function ddGo(id) {
+  var root = document.querySelector('.mod-dd');
+  if (!root) return;
+  root.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+  var target = root.querySelector('#' + id);
+  if (target) target.classList.add('active');
+  root.querySelectorAll('.secnav a').forEach(function (a) { a.classList.remove('active'); });
+  var nav = root.querySelector('#nav-' + id);
+  if (nav) nav.classList.add('active');
+  ddReportHeight();
+  ddScrollParentToTop();
+}
+
+document.querySelectorAll('.mod-dd [role="link"]').forEach(function (el) {
+  el.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+  });
+});
+
+/* ---------- Tell the parent page how tall we are ---------- */
+function ddReportHeight() {
+  var h = document.documentElement.scrollHeight;
+  if (window.parent !== window) {
+    window.parent.postMessage({ ddppHeight: h }, '*');
+  }
+}
+function ddScrollParentToTop() {
+  if (window.parent !== window) {
+    window.parent.postMessage({ ddppScrollTop: true }, '*');
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
+window.addEventListener('load', ddReportHeight);
+window.addEventListener('resize', ddReportHeight);
+document.addEventListener('toggle', ddReportHeight, true);   // FAQ open/close
+if (window.ResizeObserver) {
+  new ResizeObserver(ddReportHeight).observe(document.body);
+}
+
+/* ---------- Live counter ---------- */
+function ddLoadCount() {
+  fetch(DD_ENDPOINT, { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (data) {
+      var n = parseInt(data.count, 10);
+      if (isNaN(n)) return;
+      document.getElementById('dd-count').textContent = n.toLocaleString('en-US');
+      document.getElementById('dd-label').textContent = DD_LABEL;
+      var pct = Math.min(100, (n / DD_GOAL) * 100);
+      document.getElementById('dd-bar').style.width = pct + '%';
+      if (data.asOf) {
+        var d = new Date(data.asOf);
+        document.getElementById('dd-asof').textContent =
+          'Updated ' + d.toLocaleString('en-US', {
+            month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+          });
+      }
+      ddReportHeight();
+    })
+    .catch(function () {
+      /* Leave the zero in place rather than showing an error to clinic staff. */
+    });
+}
+ddLoadCount();
+setInterval(ddLoadCount, 10 * 60 * 1000);
+</script>
+
+</body>
+</html>
