@@ -1,20 +1,52 @@
 <!--
   FAMILY GUIDE embed.
 
-  This is a different page from the staff Resource Center. Paste this into an
-  Elementor HTML widget on the modcollective.org page you send to families
-  after they enroll. Set the section to full width with no padding.
+  ELEMENTOR SETUP -- both steps matter, and doing only one leaves a
+  letterboxed frame with theme padding around it.
 
-  The staff embed lives in embed-snippet.html. Do not mix them up: the staff
-  page carries eligibility rules and benefit amounts that families should not
-  be handed.
+  1. PAGE TEMPLATE
+     Edit the page in Elementor. Bottom-left gear icon (Page Settings)
+     -> Page Layout -> pick one:
+
+       Elementor Canvas      No theme header, footer or sidebar. The
+                             embed is the whole page. Recommended: this
+                             page already carries its own Diaper Dollars
+                             header and a footer linking back to
+                             modcollective.org, so the theme chrome is
+                             duplicated furniture.
+
+       Elementor Full Width  Keeps MOD's site header and footer, removes
+                             the content-width constraint. Use this if
+                             you want the page to sit inside the normal
+                             site navigation.
+
+  2. CONTAINER PADDING
+     Select the Section or Container holding the HTML widget.
+       Layout tab   -> Content Width: Full Width
+                    -> Columns Gap: No Gap   (Sections only)
+       Advanced tab -> Padding: 0 on all four sides
+                    -> Margin: 0 on all four sides
+     Then select the HTML widget itself:
+       Advanced tab -> Padding 0, Margin 0
+
+  IF THE HEIGHT DOES NOT ADJUST BY ITSELF
+     WordPress strips <script> tags for roles without the unfiltered_html
+     capability, and some security plugins strip them regardless. Save the
+     page while logged in as an Administrator. Without the script the frame
+     falls back to a fixed height and scrolls internally, which works but
+     looks wrong.
+
+  DO NOT CONFUSE THIS WITH THE STAFF EMBED
+     embed-snippet.html is the staff Resource Center. It carries
+     eligibility rules and benefit amounts that families should not be
+     handed. This file is the family guide. They go on different pages.
 -->
 
 <iframe
   id="ddpp-family-frame"
   src="https://ddpp-resource-center.netlify.app/families"
   title="Your Diaper Dollars Card"
-  style="width:100%; border:0; display:block; min-height:900px; height:2600px;"
+  style="width:100%; border:0; display:block; min-height:900px; height:3200px;"
   loading="lazy"></iframe>
 
 <script>
