@@ -47,7 +47,7 @@ function updateDashboard() {
 /** Read both source tabs into one normalised list of completed rows. */
 function collect_(ss) {
   var perTab = {}, sites = {}, totalRows = 0, completed = 0, children = 0;
-  var childrenFound = false, lastDate = null, missing = [];
+  var childrenFound = false, childBlank = 0, lastDate = null, missing = [];
 
   SOURCE_TABS.forEach(function (tabName) {
     var sh = ss.getSheetByName(tabName);
@@ -82,7 +82,15 @@ function collect_(ss) {
       }
       if (cChild >= 0) {
         var kids = parseInt(row[cChild], 10);
-        children += isNaN(kids) ? 1 : kids;   // a completed row is at least one child
+        if (isNaN(kids) || kids < 1) {
+          // Jotform's Sheets integration only writes new submissions, so rows
+          // that predate the column have nothing here. Every completed
+          // enrollment has at least one eligible child, so floor at 1 and
+          // count how often we had to guess.
+          kids = 1;
+          childBlank++;
+        }
+        children += kids;
       }
       if (cDate !== undefined && row[cDate] instanceof Date) {
         if (!lastDate || row[cDate] > lastDate) lastDate = row[cDate];
@@ -97,6 +105,7 @@ function collect_(ss) {
     totalRows: totalRows,
     completed: completed,
     children: childrenFound ? children : null,   // null = column not in the export yet
+    childBlank: childBlank,
     lastDate: lastDate,
     missing: missing
   };
@@ -151,6 +160,9 @@ function writeDashboard_(ss, d) {
   rows.push(['Progress', pct, '']);
   rows.push(['', '', '']);
   rows.push(['Completed enrollments', d.completed, '']);
+  if (d.children !== null && d.childBlank > 0) {
+    rows.push(['Rows counted as 1 child (no value recorded)', d.childBlank, '']);
+  }
   rows.push(['Rows in the log (all statuses)', d.totalRows, '']);
   rows.push(['Last submission', d.lastDate || '—', '']);
   rows.push(['', '', '']);
@@ -166,7 +178,10 @@ function writeDashboard_(ss, d) {
 
   if (d.children === null) {
     rows.push(['', '', '']);
-    rows.push(['Note: children per household is not in the export yet, so this counts households, not children. Add "Number of Children under 3" to the Jotform → Sheets field mapping and this switches over by itself.', '', '']);
+    rows.push(['COUNTING HOUSEHOLDS, NOT CHILDREN. The goal is 5,500 children, but "Number of Children under 3" is not in the Jotform → Sheets field mapping, so the log has nothing to add up. Add that field in Jotform and this switches over by itself — no script change.', '', '']);
+  } else if (d.childBlank > 0) {
+    rows.push(['', '', '']);
+    rows.push(['Note: ' + d.childBlank + ' completed row(s) have no children value and were counted as 1. Jotform only writes new submissions to the sheet, so rows created before the field was mapped cannot be filled in retrospectively. The real figure is this or higher.', '', '']);
   }
   if (d.missing.length) {
     rows.push(['', '', '']);
@@ -204,16 +219,17 @@ function writeFeed_(ss, d) {
   var sh = ss.getSheetByName(FEED_TAB) || ss.insertSheet(FEED_TAB);
   sh.clear();
   var counted = d.children === null ? d.completed : d.children;
-  sh.getRange(1, 1, 2, 5).setValues([
-    ['count', 'unit', 'goal', 'completed_rows', 'updated'],
+  sh.getRange(1, 1, 2, 6).setValues([
+    ['count', 'unit', 'goal', 'completed_rows', 'estimated_rows', 'updated'],
     [counted,
      d.children === null ? 'households' : 'children',
      GOAL_CHILDREN,
      d.completed,
+     d.children === null ? '' : d.childBlank,
      Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd'T'HH:mm:ssXXX")]
   ]);
-  sh.getRange(1, 1, 1, 5).setFontWeight('bold');
-  sh.autoResizeColumns(1, 5);
+  sh.getRange(1, 1, 1, 6).setFontWeight('bold');
+  sh.autoResizeColumns(1, 6);
 }
 
 /* ------------------------------------------------------------------ */
