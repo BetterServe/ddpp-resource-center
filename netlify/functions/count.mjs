@@ -27,7 +27,7 @@ const FEED_URL =
 
 // Warm-instance cache so repeat page loads don't hit Google every time.
 let cache = { value: null, at: 0 };
-const CACHE_MS = 10 * 60 * 1000; // 10 minutes
+const CACHE_MS = 5 * 60 * 1000; // 5 minutes — matches Google’s own cache on the published CSV
 
 /** Minimal CSV row splitter — handles quoted fields containing commas. */
 function splitRow(line) {
@@ -51,7 +51,7 @@ export default async (request, context) => {
   const headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Cache-Control': 'public, max-age=600'
+    'Cache-Control': 'public, max-age=300'
   };
 
   if (cache.value && Date.now() - cache.at < CACHE_MS) {

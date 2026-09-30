@@ -240,7 +240,7 @@ function installTriggers() {
   existing.forEach(function (t) {
     if (t.getHandlerFunction() === 'updateDashboard') ScriptApp.deleteTrigger(t);
   });
-  ScriptApp.newTrigger('updateDashboard').timeBased().everyHours(1).create();
+  ScriptApp.newTrigger('updateDashboard').timeBased().everyMinutes(15).create();
   ScriptApp.newTrigger('updateDashboard')
     .forSpreadsheet(SpreadsheetApp.getActiveSpreadsheet()).onChange().create();
   SpreadsheetApp.getActiveSpreadsheet().toast('Triggers installed: hourly + on change.');
