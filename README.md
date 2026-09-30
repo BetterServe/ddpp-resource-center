@@ -6,7 +6,7 @@ Elementor once. No DNS changes.
 ```
 index.html                     the page
 netlify.toml                   config
-netlify/functions/count.mjs    the Jotform proxy
+netlify/functions/count.mjs    reads the published Feed tab
 embed-snippet.html             what goes on the MOD page
 .gitignore                     keeps secrets and OS cruft out of the repo
 ```
@@ -41,25 +41,35 @@ command empty, publish directory `.`.
 Rename the site under Site configuration > Change site name. Something like
 `modcollective-ddpp`, so the URL becomes `modcollective-ddpp.netlify.app`.
 
-## 2. Add the Jotform credentials
+## 2. The counter
 
-In Netlify: Site configuration > Environment variables > Add a variable.
+**Nothing to configure in Netlify.** There is no API key and no environment
+variable. The counter reads a published Google Sheet.
 
-| Key | Value |
-|---|---|
-| `JOTFORM_API_KEY` | from Jotform: Account > API > Create New Key. Set it to **read only**. |
-| `JOTFORM_FORM_IDS` | the form ID, or several separated by commas: `2513…,2514…,2515…` |
-| `JOTFORM_BASE` | only if your Jotform account is on EU servers: `https://eu-api.jotform.com` |
+How the number gets there:
 
-The form ID is the number in the form's URL: `jotform.com/form/251234567890123`.
+```
+Jotform  ->  Client Log workbook  ->  Apps Script  ->  published Feed tab  ->  /api/count
+```
 
-Redeploy after adding variables (Deploys > Trigger deploy). Environment
-variables only take effect on a fresh build.
+`DDPP-Dashboard.gs` (in the parent folder, not this repo) runs inside the
+workbook. It counts rows where `bs_status` is `Completed`, builds a Dashboard
+tab for people and a Feed tab of one header row and one data row, and refreshes
+hourly and whenever Jotform adds a row.
 
-Test it by visiting `https://your-site-name.netlify.app/api/count`. You should
-see something like `{"count":0,"asOf":"..."}`. If you see an error, the key or
-the form ID is wrong. If you see a 404, the function did not deploy — check
-that the file is still named `count.mjs` and not `count.js`.
+Only the **Feed** tab is published — File > Share > Publish to web > *Feed* >
+CSV. Never publish "Entire document": the log tabs carry caregiver IDs.
+
+The function reads that CSV and returns `{"count":23,"unit":"households",
+"goal":5500,"asOf":"..."}`. The page takes the unit and the goal from the feed,
+so changing the goal in the Apps Script changes the site.
+
+If the sheet is ever republished at a new URL, either update `FEED_URL` in
+`netlify/functions/count.mjs` or set `DDPP_FEED_URL` in Netlify.
+
+Test it at `https://ddpp-resource-center.netlify.app/api/count`. A 502 means the
+feed is unreachable; a 404 means the function did not deploy, so check the file
+is still named `count.mjs` and not `count.js`.
 
 ## 3. Embed it
 
@@ -120,18 +130,25 @@ removes the ambiguity without adding a package file. Do not rename it back.
 
 ## Two things to decide
 
-**The API key is read only for a reason.** A read-only Jotform key can still
-pull full submission records, which contain family names and phone numbers.
-That is exactly why the count goes through the function instead of the browser.
-The key lives in Netlify's environment variables and never reaches the page or
-this repo.
+**No credential exists in this path.** The counting happens inside the
+workbook, and only aggregates are published. Nothing the site can reach could
+return a submission record even if it were compromised. That is a stronger
+position than the read-only API key this originally used, because a read-only
+Jotform key can still pull full submissions.
 
-**The number says "applications submitted," not "families enrolled."** Jotform
-counts submissions. A submission is not an enrollment until the family clicks
-the verification text and the card issues, so this number will always run ahead
-of the figure in your IDHS reporting. If you would rather the page show actual
-enrollments, point the function at card issuance data instead of Jotform and
-change `DD_LABEL` in `index.html` to `families enrolled`.
+What that trades away: anyone with the published CSV URL can see the totals.
+They are counts of enrollments by program, which is not sensitive. Keep the
+caregiver IDs out of anything published and this stays true.
+
+**The number counts households, not children — for now.** The goal is 5,500
+children, but "Number of Children under 3" is not yet in the Jotform to Sheets
+field mapping, so the workbook can only count enrollments. The page says which
+it is showing rather than comparing two different units silently.
+
+Add that column to the Jotform integration and it fixes itself: the Apps Script
+looks for any header mentioning "child", switches the Feed's `unit` to
+`children`, and the page relabels. No code change. It cannot be backfilled for
+rows already written, so it is worth doing before enrollment volume builds.
 
 ## Security headers
 

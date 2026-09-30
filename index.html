@@ -530,7 +530,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
             <h3>Enrollment goal</h3>
             <span class="pmeta" id="dd-asof">Checking&hellip;</span>
           </div>
-          <p class="pbig"><strong id="dd-count">&mdash;</strong><span id="dd-label">applications submitted</span></p>
+          <p class="pbig"><strong id="dd-count">&mdash;</strong><span id="dd-label">enrolled</span></p>
           <div class="track">
             <div class="fill" id="dd-bar"></div>
           </div>
@@ -1157,8 +1157,7 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 <script>
 /* ---------- Settings you may want to change ---------- */
 var DD_ENDPOINT = '/api/count';   // the Netlify function
-var DD_GOAL     = 5500;           // program target
-var DD_LABEL    = 'applications submitted';  // see note in the README about wording
+var DD_GOAL     = 5500;           // fallback only — the feed supplies the real goal
 
 /* ---------- Section switching ---------- */
 var DD_SECTIONS = ['home', 'program', 'card', 'enroll', 'about', 'support'];
@@ -1289,14 +1288,21 @@ function ddLoadCount() {
       if (isNaN(n)) return;
       ddGotCount = true;
       document.getElementById('dd-count').textContent = n.toLocaleString('en-US');
-      document.getElementById('dd-label').textContent = DD_LABEL;
-      var pct = Math.min(100, (n / DD_GOAL) * 100);
+      /* The workbook says what it is counting. Until "Number of Children
+         under 3" is in the Jotform export it can only count households, and
+         the goal is expressed in children — so the page says which it is
+         rather than quietly comparing two different units. */
+      var unit = String(data.unit || 'households').toLowerCase();
+      document.getElementById('dd-label').textContent = unit + ' enrolled';
+      var goal = parseInt(data.goal, 10) || DD_GOAL;
+      var pct = Math.min(100, (n / goal) * 100);
       document.getElementById('dd-bar').style.width = pct + '%';
       document.getElementById('dd-pct').textContent = Math.round(pct) + '%';
       if (data.asOf) {
         var d = new Date(data.asOf);
         document.getElementById('dd-asof').textContent =
-          'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+          + (unit === 'children' ? '' : ' \u00b7 counting households, not children');
       }
       ddReportHeight();
     })
