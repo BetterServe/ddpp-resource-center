@@ -1292,8 +1292,8 @@ function ddLoadCount() {
          under 3" is in the Jotform export it can only count households, and
          the goal is expressed in children — so the page says which it is
          rather than quietly comparing two different units. */
-      var unit = String(data.unit || 'households').toLowerCase();
-      document.getElementById('dd-label').textContent = unit + ' enrolled';
+      var unit = String(data.unit || 'children').toLowerCase();
+      document.getElementById('dd-label').textContent = data.label || (unit + ' enrolled');
       var goal = parseInt(data.goal, 10) || DD_GOAL;
       var pct = Math.min(100, (n / goal) * 100);
       document.getElementById('dd-bar').style.width = pct + '%';

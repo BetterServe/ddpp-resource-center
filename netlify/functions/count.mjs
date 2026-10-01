@@ -11,15 +11,15 @@
  *   count,unit,goal,completed_rows,updated
  *   23,households,5500,23,2026-09-30T10:20:28-05:00
  *
- * `unit` matters. Until "Number of Children under 3" is added to the Jotform to
- * Sheets field mapping, the workbook can only count households, and says so.
- * When that column appears the Apps Script switches to children on its own and
- * this starts reporting children without a code change.
+ * The workbook sums "Number of Children under 3" across every application.
+ * It does not filter on bs_status — that column is written downstream and is
+ * empty on live rows, so filtering on it returned zero.
  *
  * Optional env override, if the sheet is ever republished at a new URL:
  *   DDPP_FEED_URL
  *
- * Returns: {"count":23,"unit":"households","goal":5500,"asOf":"..."}
+ * Returns: {"count":42,"unit":"children","label":"children enrolled","goal":5500,
+ *           "applications":36,"asOf":"..."}
  */
 
 const FEED_URL =
@@ -79,10 +79,15 @@ export default async (request, context) => {
     if (isNaN(count)) throw new Error('Feed count is not a number');
 
     const goal = parseInt(field('goal'), 10);
+    const apps = parseInt(field('applications'), 10);
+    const unit = field('unit') || 'children';
     const payload = {
       count,
-      unit: field('unit') || 'households',
+      unit,
+      // The sheet owns the wording, so it can be changed without a deploy.
+      label: field('label') || (unit + ' enrolled'),
       goal: isNaN(goal) ? 5500 : goal,
+      applications: isNaN(apps) ? null : apps,
       asOf: field('updated') || new Date().toISOString()
     };
 
