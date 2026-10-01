@@ -134,7 +134,6 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .siterow:first-child .sitetrack i { background: var(--teal); }
 .mod-dd .sitecount { font-size: 17px; font-weight: 700; color: var(--green); text-align: right; white-space: nowrap; }
 .mod-dd .sitecount span { font-size: 13px; font-weight: 500; color: var(--dark-gray); margin-left: 6px; }
-.mod-dd .sitesnote { font-size: 14px; color: var(--dark-gray); margin: 14px 0 0; }
 @media (max-width: 620px) {
   .mod-dd .siterow { grid-template-columns: 1fr auto; gap: 6px 14px; }
   .mod-dd .sitetrack { grid-column: 1 / -1; }
@@ -568,7 +567,6 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
       <div id="dd-sites-wrap" hidden>
         <h3 class="sectitle">Enrollments by site</h3>
         <div class="sites" id="dd-sites"></div>
-        <p class="sitesnote" id="dd-sites-note"></p>
       </div>
 
       <div class="help">
@@ -1303,9 +1301,6 @@ function ddRenderSites(sites, unit) {
     host.appendChild(row);
   });
 
-  document.getElementById('dd-sites-note').textContent =
-    'Ranked by ' + (unit || 'children') + '. Bars compare sites with each other, not with the 5,500 goal. '
-    + 'A site appears here once it has its first enrollment.';
   wrap.hidden = false;
 }
 
