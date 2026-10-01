@@ -64,31 +64,60 @@ export default async (request, context) => {
     const res = await fetch(url, { redirect: 'follow' });
     if (!res.ok) throw new Error(`Feed returned ${res.status}`);
 
+    // An unpublished or moved sheet still answers 200 — with an HTML error
+    // page. Without this the CSV parser fails somewhere confusing instead of
+    // saying what is actually wrong.
+    const ctype = res.headers.get('content-type') || '';
+    if (!ctype.includes('csv')) {
+      throw new Error('Feed is not CSV — the sheet is unpublished or the gid changed');
+    }
+
     const text = await res.text();
     const lines = text.split(/\r?\n/).filter((l) => l.trim() !== '');
     if (lines.length < 2) throw new Error('Feed has no data row');
 
     const head = splitRow(lines[0]).map((h) => h.toLowerCase());
-    const row = splitRow(lines[1]);
-    const field = (name) => {
-      const i = head.indexOf(name);
-      return i === -1 ? '' : row[i];
+    const at = (name) => head.indexOf(name);
+    const col = (row, name) => {
+      const i = at(name);
+      return i === -1 ? '' : (row[i] || '');
+    };
+    const num = (v) => {
+      const n = parseInt(v, 10);
+      return isNaN(n) ? null : n;
     };
 
-    const count = parseInt(field('count'), 10);
-    if (isNaN(count)) throw new Error('Feed count is not a number');
+    const rows = lines.slice(1).map(splitRow);
+    const iType = at('type');
 
-    const goal = parseInt(field('goal'), 10);
-    const apps = parseInt(field('applications'), 10);
-    const unit = field('unit') || 'children';
+    // Row 2 is the totals; every row after it is one site. An older feed had
+    // no type column at all, in which case the single data row is the totals.
+    const totals = iType === -1 ? rows[0] : rows.find((r) => r[iType] === 'total');
+    if (!totals) throw new Error('Feed has no totals row');
+
+    const count = num(col(totals, 'children')) ?? num(col(totals, 'count'));
+    if (count === null) throw new Error('Feed count is not a number');
+
+    const unit = col(totals, 'unit') || 'children';
+
+    const sites = (iType === -1 ? [] : rows.filter((r) => r[iType] === 'site'))
+      .map((r) => ({
+        name: col(r, 'name'),
+        applications: num(col(r, 'applications')),
+        children: num(col(r, 'children'))
+      }))
+      .filter((s) => s.name && s.children !== null)
+      .sort((a, b) => b.children - a.children);
+
     const payload = {
       count,
       unit,
       // The sheet owns the wording, so it can be changed without a deploy.
-      label: field('label') || (unit + ' enrolled'),
-      goal: isNaN(goal) ? 5500 : goal,
-      applications: isNaN(apps) ? null : apps,
-      asOf: field('updated') || new Date().toISOString()
+      label: col(totals, 'label') || (unit + ' enrolled'),
+      goal: num(col(totals, 'goal')) ?? 5500,
+      applications: num(col(totals, 'applications')),
+      sites,
+      asOf: col(totals, 'updated') || new Date().toISOString()
     };
 
     cache = { value: payload, at: Date.now() };

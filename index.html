@@ -117,6 +117,29 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
 .mod-dd .help .btn.secondary { background: transparent; color: var(--cream); border-color: var(--cream); }
 .mod-dd .help .btn.secondary:hover { background: var(--cream); color: var(--green); border-color: var(--cream); }
 
+/* ---------- Home: by-site leaderboard ----------
+   Bars are scaled to the leading site, not to the goal — at 42 of 5,500 a
+   goal-scaled bar is invisible, and the point of this table is comparison
+   between sites rather than progress against the target. */
+.mod-dd .sites { margin: 6px 0 4px; }
+.mod-dd .siterow {
+  display: grid; grid-template-columns: minmax(150px, 1.5fr) 2fr auto;
+  gap: 16px; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--med-gray);
+}
+.mod-dd .siterow:last-child { border-bottom: none; }
+.mod-dd .sitename { font-size: 15px; font-weight: 600; color: var(--green); }
+.mod-dd .sitetrack { height: 10px; border-radius: 999px; background: rgba(27,107,107,.12); overflow: hidden; }
+.mod-dd .sitetrack i { display: block; height: 100%; width: 0; background: var(--med-green); border-radius: 999px; }
+.mod-dd .siterow:first-child .sitetrack i { background: var(--teal); }
+.mod-dd .sitecount { font-size: 17px; font-weight: 700; color: var(--green); text-align: right; white-space: nowrap; }
+.mod-dd .sitecount span { font-size: 13px; font-weight: 500; color: var(--dark-gray); margin-left: 6px; }
+.mod-dd .sitesnote { font-size: 14px; color: var(--dark-gray); margin: 14px 0 0; }
+@media (max-width: 620px) {
+  .mod-dd .siterow { grid-template-columns: 1fr auto; gap: 6px 14px; }
+  .mod-dd .sitetrack { grid-column: 1 / -1; }
+}
+
 /* ---------- Home: the two status bars ---------- */
 .mod-dd .panels {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(298px, 1fr));
@@ -540,6 +563,12 @@ html, body { margin: 0; padding: 0; background: #EBE9E3; }
           </div>
         </div>
 
+      </div>
+
+      <div id="dd-sites-wrap" hidden>
+        <h3 class="sectitle">Enrollments by site</h3>
+        <div class="sites" id="dd-sites"></div>
+        <p class="sitesnote" id="dd-sites-note"></p>
       </div>
 
       <div class="help">
@@ -1233,6 +1262,53 @@ if (window.ResizeObserver) {
   new ResizeObserver(ddReportHeight).observe(document.body);
 }
 
+/* ---------- By-site leaderboard ---------- */
+function ddRenderSites(sites, unit) {
+  var wrap = document.getElementById('dd-sites-wrap');
+  var host = document.getElementById('dd-sites');
+  if (!wrap || !host) return;
+
+  if (!sites || !sites.length) { wrap.hidden = true; return; }
+
+  host.textContent = '';
+  var top = sites[0].children || 1;
+
+  sites.forEach(function (site) {
+    var row = document.createElement('div');
+    row.className = 'siterow';
+
+    var name = document.createElement('span');
+    name.className = 'sitename';
+    name.textContent = site.name;          // textContent, never innerHTML
+
+    var track = document.createElement('span');
+    track.className = 'sitetrack';
+    var fill = document.createElement('i');
+    fill.style.width = Math.max(2, (site.children / top) * 100) + '%';
+    track.appendChild(fill);
+
+    var count = document.createElement('span');
+    count.className = 'sitecount';
+    count.textContent = site.children.toLocaleString('en-US');
+    if (site.applications !== null && site.applications !== undefined) {
+      var sub = document.createElement('span');
+      sub.textContent = site.applications === 1
+        ? '1 application' : site.applications + ' applications';
+      count.appendChild(sub);
+    }
+
+    row.appendChild(name);
+    row.appendChild(track);
+    row.appendChild(count);
+    host.appendChild(row);
+  });
+
+  document.getElementById('dd-sites-note').textContent =
+    'Ranked by ' + (unit || 'children') + '. Bars compare sites with each other, not with the 5,500 goal. '
+    + 'A site appears here once it has its first enrollment.';
+  wrap.hidden = false;
+}
+
 /* ---------- Enrollment window countdown ---------- */
 var DD_OPEN  = new Date(2026, 9, 1);        // October 1 2026, local time
 var DD_CLOSE = new Date(2026, 11, 23, 23, 59, 59);
@@ -1304,6 +1380,7 @@ function ddLoadCount() {
           'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
           + (unit === 'children' ? '' : ' \u00b7 counting households, not children');
       }
+      ddRenderSites(data.sites, data.unit);
       ddReportHeight();
     })
     .catch(function () {
@@ -1316,6 +1393,8 @@ function ddLoadCount() {
         document.getElementById('dd-asof').textContent = 'Awaiting data source';
         document.getElementById('dd-pct').textContent = '';
         document.getElementById('dd-bar').style.width = '0%';
+        var sw = document.getElementById('dd-sites-wrap');
+        if (sw) sw.hidden = true;
         ddReportHeight();
       }
     });

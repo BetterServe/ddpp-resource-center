@@ -208,13 +208,22 @@ function writeDashboard_(ss, d) {
 function writeFeed_(ss, d) {
   var sh = ss.getSheetByName(FEED_TAB) || ss.insertSheet(FEED_TAB);
   sh.clear();
-  sh.getRange(1, 1, 2, 7).setValues([
-    ['count', 'unit', 'label', 'goal', 'applications', 'estimated_rows', 'updated'],
-    [d.children, 'children', SITE_LABEL, GOAL_CHILDREN, d.apps, d.estimated,
+  // Row 1 headers. Row 2 is the totals row. Every row after it is one site,
+  // ranked. Keeping it all on one tab means the published URL never changes.
+  var out = [
+    ['type', 'name', 'applications', 'children', 'unit', 'label', 'goal', 'estimated_rows', 'updated'],
+    ['total', 'All sites', d.apps, d.children, 'children', SITE_LABEL, GOAL_CHILDREN, d.estimated,
      Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "yyyy-MM-dd'T'HH:mm:ssXXX")]
-  ]);
-  sh.getRange(1, 1, 1, 7).setFontWeight('bold');
-  sh.autoResizeColumns(1, 7);
+  ];
+  Object.keys(d.sites)
+    .sort(function (a, b) { return d.sites[b].children - d.sites[a].children; })
+    .forEach(function (name) {
+      out.push(['site', name, d.sites[name].apps, d.sites[name].children, '', '', '', '', '']);
+    });
+
+  sh.getRange(1, 1, out.length, 9).setValues(out);
+  sh.getRange(1, 1, 1, 9).setFontWeight('bold');
+  sh.autoResizeColumns(1, 9);
 }
 
 /* ------------------------------------------------------------------ */
